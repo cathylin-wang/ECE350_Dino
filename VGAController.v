@@ -65,7 +65,7 @@ module VGAController(
 
 	reg[12:0] offset = 0;
 
-	reg[31:0] sx = 30, sy = GROUND-65;
+	reg[31:0] sx = 30, sy = GROUND-60;
 	wire inSquare;
 
 	// count
@@ -80,7 +80,7 @@ module VGAController(
 	
 	// dino
 	RAM #(
-		.DEPTH(65*65*3), 		       // sprite mem file size		
+		.DEPTH(60*60*3), 		       // sprite mem file size		
 		.DATA_WIDTH(1), 		       // either 1 or 0
 		.ADDRESS_WIDTH(13),     // Set address width according to the color count
 		.MEMFILE({FILES_PATH, "dino.mem"}))  // Memory initialization
@@ -118,7 +118,7 @@ module VGAController(
 		end
 	end
     
-	assign inSquare = x >= sx & x < (sx + 65) & y >= sy & y < (sy + 65);
+	assign inSquare = x >= sx & x < (sx + 60) & y >= sy & y < (sy + 60);
 	assign colorData = background_data ? 12'd0 : 12'hfff;
 	assign tempColor = (inSquare && sprite_data) ? 12'd0 : colorData;
 		assign colorOut = active ? tempColor : 12'd0; // When not active, output black

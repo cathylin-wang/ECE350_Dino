@@ -4,7 +4,7 @@ from PIL import Image
 def decode():
   image = Image.open(sys.argv[1])
 
-  size = 65
+  size = 60
   image = image.resize((size, size))
   # image = image.resize((640, 480))
   pixels = image.load()
