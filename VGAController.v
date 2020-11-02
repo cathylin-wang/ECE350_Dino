@@ -9,7 +9,7 @@ module VGAController(
 	output[3:0] VGA_B,  // Blue Signal Bits
 	inout ps2_clk,
 	inout ps2_data,
-	input left, right, up, down);
+	input up, down);
 	
 	// Lab Memory Files Location
 	localparam FILES_PATH = "Z:/cpu/ECE350_Dino/";
@@ -51,7 +51,8 @@ module VGAController(
 		PIXEL_ADDRESS_WIDTH = $clog2(PIXEL_COUNT) + 1,           // Use built in log2 command
 		BITS_PER_COLOR = 12, 	  								 // Nexys A7 uses 12 bits/color
 		PALETTE_COLOR_COUNT = 256, 								 // Number of Colors available
-		PALETTE_ADDRESS_WIDTH = $clog2(PALETTE_COLOR_COUNT) + 1; // Use built in log2 Command
+		PALETTE_ADDRESS_WIDTH = $clog2(PALETTE_COLOR_COUNT) + 1,
+		GROUND = 335; // Use built in log2 Command
 
 	wire[PIXEL_ADDRESS_WIDTH-1:0] imgAddress;  	 // Image address for the image data
 	assign imgAddress = x + 640*y;				 // Address calculated coordinate
@@ -64,7 +65,7 @@ module VGAController(
 
 	reg[12:0] offset = 0;
 
-	reg[31:0] sx = 320, sy = 240;
+	reg[31:0] sx = 30, sy = GROUND-65;
 	wire inSquare;
 
 	// count
@@ -79,7 +80,7 @@ module VGAController(
 	
 	// dino
 	RAM #(
-		.DEPTH(75*75), 		       // sprite mem file size		
+		.DEPTH(65*65*3), 		       // sprite mem file size		
 		.DATA_WIDTH(1), 		       // either 1 or 0
 		.ADDRESS_WIDTH(13),     // Set address width according to the color count
 		.MEMFILE({FILES_PATH, "dino.mem"}))  // Memory initialization
@@ -108,12 +109,6 @@ module VGAController(
 	// input left, right, up, down;
 	always @(posedge clk) begin
 		if (screenEnd) begin
-			if (left) begin
-				sx <= sx - 1;
-			end
-			else if (right) begin
-				sx <= sx + 1;
-			end
 			if (up) begin
 				sy <= sy - 1;
 			end
@@ -123,7 +118,7 @@ module VGAController(
 		end
 	end
     
-	assign inSquare = x >= sx & x < (sx + 75) & y >= sy & y < (sy + 75);
+	assign inSquare = x >= sx & x < (sx + 65) & y >= sy & y < (sy + 65);
 	assign colorData = background_data ? 12'd0 : 12'hfff;
 	assign tempColor = (inSquare && sprite_data) ? 12'd0 : colorData;
 		assign colorOut = active ? tempColor : 12'd0; // When not active, output black
