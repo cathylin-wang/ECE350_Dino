@@ -1,6 +1,6 @@
-module shouldStall(stall, dx_ir, fd_ir, pw_stall, screen_end);
+module shouldStall(stall, dx_ir, fd_ir, pw_stall, screen_end, clock, reset);
     input[31:0] dx_ir, fd_ir;
-    input pw_stall, screen_end;
+    input pw_stall, screen_end, clock, reset;
     output stall;
 
     wire [4:0] dx_opcode, fd_opcode, dx_rd;
@@ -15,13 +15,25 @@ module shouldStall(stall, dx_ir, fd_ir, pw_stall, screen_end);
     
     assign rs = fd_opcode == 5'b10110 ? 30 : fd_ir[21:17];
 
+    wire screen_end_hold;
+    dffe_ref SCREENEND(screen_end_hold, screen_end, clock, 1'b1, reset);
+
+
     assign stall = 
     pw_stall | 
-    ((dx_opcode == 5'b01000) //load 
-        & ((rs == dx_rd) //fd_rsa = rs
-        || rt == dx_rd //fd_rsb = rt
-        && fd_opcode != 5'b00111)) //opcode = store
-    | (fd_opcode == 5'b11100 & screen_end == 0); //if opcode is stall and screen_end is low... stop stalling when screen end is high
+    (
+        (dx_opcode == 5'b01000) //load 
+            & ((rs == dx_rd) //fd_rsa = rs
+            || rt == dx_rd //fd_rsb = rt
+            && fd_opcode != 5'b00111)) //opcode = store
+        | (fd_opcode == 5'b11100 & 
+        (
+            screen_end == 0 | 
+            (
+                screen_end & screen_end_hold
+            )
+        )
+    ); //if opcode is stall and screen_end is low... stop stalling when screen end is high
 
     // lw --> sw is fixed with bypass
     // lw --> blt or bne? do we fix here by replaceing rt with rd?
