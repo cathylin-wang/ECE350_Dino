@@ -32,9 +32,11 @@ module Wrapper(
     wire[31:0] instAddr, instData, 
                rData, regA, regB,
                memAddr, memDataIn, memDataOut;
+
+    wire screenEnd;
     
     ///// Main Processing Unit
-    processor CPU(.clock(clock), .reset(reset), 
+    processor CPU(.clock(clock), .reset(reset), .screen_end(screenEnd),
                   
 		  ///// ROM
                   .address_imem(instAddr), .q_imem(instData),
@@ -66,13 +68,14 @@ module Wrapper(
     RAM ProcMem(.clk(clock), .wEn(mwe), .addr(memAddr[11:0]), .dataIn(memDataIn), .dataOut(memDataOut));
 
     ///// VGA Controller
-    VGAController vga(clock, reset, hSync, vSync, VGA_R, VGA_G, VBA_B, up, down);
+    VGAController vga(clock, reset, hSync, vSync, VGA_R, VGA_G, VBA_B, screenEnd, up, down);
 
     // Define counter and audio clock
+    // System clock is 100 MHz system clock?
 	reg game_clock = 0;
 	reg[31:0] game_clock_ctr = 0;
 	always @(posedge clock) begin
-		if (game_clock_ctr < 100 - 1)  
+		if (game_clock_ctr < 10000000 - 1)  
 			game_clock_ctr <= game_clock_ctr + 1;
 		else begin
 			game_clock_ctr <= 0;

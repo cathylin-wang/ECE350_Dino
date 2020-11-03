@@ -7,6 +7,7 @@ module VGAController(
 	output[3:0] VGA_R,  // Red Signal Bits
 	output[3:0] VGA_G,  // Green Signal Bits
 	output[3:0] VGA_B,  // Blue Signal Bits
+	output screenEnd,
 	input up, down);
 	
 	// Lab Memory Files Location
@@ -26,7 +27,7 @@ module VGAController(
 		VIDEO_WIDTH = 640,  // Standard VGA Width
 		VIDEO_HEIGHT = 480; // Standard VGA Height
 
-	wire active, screenEnd;
+	wire active;
 	wire[9:0] x;
 	wire[8:0] y;
 	
@@ -91,7 +92,7 @@ module VGAController(
 	// background
 	RAM #(
 		.DEPTH(PIXEL_COUNT), 		       // sprite mem file size		
-		.DATA_WIDTH(1), 		       // either 1 or 0
+		.DATA_WIDTH(1), 		           // either 1 or 0
 		.ADDRESS_WIDTH(PIXEL_ADDRESS_WIDTH),     // Set address width according to the color count
 		.MEMFILE({FILES_PATH, "background.mem"}))  // Memory initialization
 	ImageData(

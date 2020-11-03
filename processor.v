@@ -21,6 +21,7 @@ module processor(
     // Control signals
     clock,                          // I: The master clock
     reset,                          // I: A reset signal
+    screen_end,
 
     // Imem
     address_imem,                   // O: The address of the data to get from imem //index into imem thru pc
@@ -47,7 +48,7 @@ module processor(
 	);
 
 	// Control signals
-	input clock, reset;
+	input clock, reset, screen_end;
 	
 	// Imem
     output [31:0] address_imem;
@@ -169,9 +170,7 @@ module processor(
     // data_writeReg assigned FROM WRITEBACK
 
     /****** Flush or Stall ***/
-    shouldStall STALL(dostall, dx_ir, fd_ir, pw_stall); //module shouldStall(stall, dx_ir, fd_ir, pw_stall);
-    // module stall(stall, dx_ir, rega, regb, fd_opcode, pw_stall);
-    // stall STALL(dostall, dx_ir, ctrl_readRegA, ctrl_readRegB, fd_opcode, pw_stall); //module shouldStall(stall, dx_ir, rega, regb, fd_opcode, pw_stall);
+    shouldStall STALL(dostall, dx_ir, fd_ir, pw_stall, screen_end); //module shouldStall(stall, dx_ir, fd_ir, pw_stall);
 
     assign dx_ir_in = dostall | dobranch ? 0 : fd_ir;
 
