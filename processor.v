@@ -42,7 +42,7 @@ module processor(
     data_readRegB,                   // I: Data from port B of RegFile
 
     //io
-    fd_jio                         //I: If button is pressed
+    io_jump                         //I: If button is pressed
 	 
 	);
 
@@ -65,7 +65,7 @@ module processor(
 	input [31:0] data_readRegA, data_readRegB;
 
     // IO
-    input fd_jio;
+    input io_jump;
     /************************************************ Variables by Stage ***********************************************/
     /****** initialize ********/
     wire[31:0] q_imem0, q_dmem0;

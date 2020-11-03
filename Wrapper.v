@@ -42,7 +42,7 @@ module Wrapper(clock, reset, up_button);
                   .data(memDataIn), .q_dmem(memDataOut)
                   
           //// IO
-                  .fd_jio(up_button)
+                  .io_jump(up_button)
                   ); 
                   
     ///// Instruction Memory (ROM)
