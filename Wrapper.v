@@ -68,4 +68,17 @@ module Wrapper(
     ///// VGA Controller
     VGAController vga(clock, reset, hSync, vSync, VGA_R, VGA_G, VBA_B, up, down);
 
+    // Define counter and audio clock
+	reg game_clock = 0;
+	reg[31:0] game_clock_ctr = 0;
+	always @(posedge clock) begin
+		if (game_clock_ctr < 100 - 1)  
+			game_clock_ctr <= game_clock_ctr + 1;
+		else begin
+			game_clock_ctr <= 0;
+			game_clock <= ~game_clock;
+		end
+	end
+
+
 endmodule
