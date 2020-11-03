@@ -17,8 +17,8 @@
  * 
  */
 
-module Wrapper(clock, reset);
-    input clock, reset;
+module Wrapper(clock, reset, up_button);
+    input clock, reset, up_button;
 
     wire rwe, mwe;
     wire[4:0] rd, rs1, rs2;
@@ -39,7 +39,11 @@ module Wrapper(clock, reset);
                   
 		  ///// RAM
                   .wren(mwe), .address_dmem(memAddr), 
-                  .data(memDataIn), .q_dmem(memDataOut)); 
+                  .data(memDataIn), .q_dmem(memDataOut)
+                  
+          //// IO
+                  .fd_jio(up_button)
+                  ); 
                   
     ///// Instruction Memory (ROM)
     ROM #(.MEMFILE("_smorgasbordtest.mem"))InstMem(.clk(clock), .wEn(1'b0), .addr(instAddr[11:0]), .dataIn(32'b0), .dataOut(instData));

@@ -39,7 +39,10 @@ module processor(
     ctrl_readRegB,                  // O: Register to read from port B of RegFile
     data_writeReg,                  // O: Data to write to for RegFile
     data_readRegA,                  // I: Data from port A of RegFile
-    data_readRegB                   // I: Data from port B of RegFile
+    data_readRegB,                   // I: Data from port B of RegFile
+
+    //io
+    fd_jio                         //I: If button is pressed
 	 
 	);
 
@@ -61,6 +64,8 @@ module processor(
 	output [31:0] data_writeReg;
 	input [31:0] data_readRegA, data_readRegB;
 
+    // IO
+    input fd_jio;
     /************************************************ Variables by Stage ***********************************************/
     /****** initialize ********/
     wire[31:0] q_imem0, q_dmem0;
@@ -148,12 +153,13 @@ module processor(
     assign fd_issw = fd_opcode == 5'b00111;
     // opcode stuff for branching
     assign fd_opcode = dx_ir_in[31:27];
-    wire fd_bne, fd_j, fd_jal, fd_jr, fd_bex;
+    wire fd_bne, fd_j, fd_jal, fd_jr, fd_bex, fd_jio;
     assign fd_bne = (fd_opcode == 5'b00010);
     assign fd_j = fd_opcode == 5'b00001;
     assign fd_jal = fd_opcode == 5'b00011;
     assign fd_jr = fd_opcode == 5'b00100;
     assign fd_bex = fd_opcode == 5'b10110;
+    assign fd_jio = fd_opcode == 5'b11111;
     wire [4:0] fd_rs;
     assign fd_rs = dx_ir_in[21:17];
     assign ctrl_readRegA = fd_bex ? 30 : fd_rs;
@@ -194,12 +200,13 @@ module processor(
     cla_32bit FASTBRANCHADD(fast_pcN, fastBranchPC32, fd_pc, fd_i, 1'b0); // cla_32bit(S, c32, a, b, c0);
     // assign bnePC = (fd_opcode = 5'b00010 && ~(data_readRegA == data_readRegB)) ? fast_pcN : 
     assign fastBranchPC_rd = (fd_jr) ? fb_by_b : fast_pcN; //PC = rd if jr
-    assign fastBranchPC = (fd_jal | fd_j | fd_bex) ? fd_t : fastBranchPC_rd; // PC = T if jal or j or bex
+    assign fastBranchPC = (fd_jal | fd_j | fd_bex | fd_jio) ? fd_t : fastBranchPC_rd; // PC = T if jal or j or bex
 
     wire doFastBranch;
     assign doFastBranch = (fd_bne && ~(fb_by_a == fb_by_b)) //bne & rd != rs
         | (fd_bex & (| fb_by_a)) //bex and rstatus != 0
-        | fd_j | fd_jal | fd_jr;
+        | fd_j | fd_jal | fd_jr
+        | (fd_jio & io_jump);
 
 
     /******** EXECUTE ********/
