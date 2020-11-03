@@ -95,7 +95,7 @@ struct instruction
   instruction& operator=(const instruction& i)
   {
     opcode = i.opcode;
-	alu_opcode = i.alu_opcode;
+	  alu_opcode = i.alu_opcode;
     type = i.type;
     opstr = i.opstr;
     insn = i.insn;
@@ -201,22 +201,21 @@ struct instruction
     int reg;
     switch(type)	// I,IBranchComp,IDisp,J,R,R1RS,RSH
     {
-	case I:
-		do
+      case I:
+        do
         {
-		  if((reg = parse_reg(in)) < 0) break;
-          insn.itype.rd = reg;
-          if(!(in >> ch) || ch != ',') break;
-
           if((reg = parse_reg(in)) < 0) break;
-          insn.itype.rs = reg;
-          if(!(in >> ch) || ch != ',') break;
+              insn.itype.rd = reg;
+              if(!(in >> ch) || ch != ',') break;
 
-          if(parse_imm(in) < 0) break;
-          
-		  return;
+              if((reg = parse_reg(in)) < 0) break;
+              insn.itype.rs = reg;
+              if(!(in >> ch) || ch != ',') break;
+
+              if(parse_imm(in) < 0) break;
+              
+          return;
         } while(0);
-
         throw string("Incorrectly formatted i-type instruction\nCorrect syntax is "+opstr+" $rL,$rM,N\nwhere L and M are register identifiers and N is an immediate value");
 
       case IBranchComp:
@@ -309,6 +308,8 @@ struct instruction
         } while(0);
 
         throw string("Incorrectly formatted r-type instruction\nCorrect syntax is "+opstr+" $rN,$rL,N\nwhere L and M are register identifiers and N is an integer");
+      case Z:
+        break;
       default:
         throw string("Undefined instruction type!");
     }

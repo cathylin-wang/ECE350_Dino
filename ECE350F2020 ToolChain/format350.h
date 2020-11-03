@@ -5,7 +5,7 @@
 Originally written by Dr. Bletch, modified for the purposes of ECE350 by Mary Stuart Elder and Oliver Rodas
 */
 
-enum instruction_type {I,IBranchComp,IDisp,J,R,R1RS,RSH};
+enum instruction_type {I,IBranchComp,IDisp,J,R,R1RS,RSH,Z};
 struct instruction_t
 {
   unsigned short opcode;
@@ -37,13 +37,14 @@ struct instruction_t
 #define OPCODE_MULT   0x6
 #define OPCODE_DIV    0x7
 #define OPCODE_JIO   -0x1
+#define OPCODE_WAIT  -0x4
 
 instruction_t opcode_arr[] = {
     instruction_t(OPCODE_ALU, OPCODE_ADD,		   "add",   R),
     instruction_t(OPCODE_ADDI, OPCODE_ALU_DEFAULT, "addi",  I),
     instruction_t(OPCODE_ALU, OPCODE_SUB,		   "sub",   R),
-	instruction_t(OPCODE_ALU, OPCODE_AND,		   "and",   R),
-	instruction_t(OPCODE_ALU, OPCODE_OR,		   "or",    R),
+    instruction_t(OPCODE_ALU, OPCODE_AND,		   "and",   R),
+    instruction_t(OPCODE_ALU, OPCODE_OR,		   "or",    R),
     instruction_t(OPCODE_ALU, OPCODE_SLL,		   "sll",   RSH),
     instruction_t(OPCODE_ALU, OPCODE_SRA,		   "sra",   RSH),
     instruction_t(OPCODE_SW, OPCODE_ALU_DEFAULT,   "sw",    IDisp),
@@ -58,6 +59,7 @@ instruction_t opcode_arr[] = {
     instruction_t(OPCODE_ALU, OPCODE_MULT, "mul", R),
     instruction_t(OPCODE_ALU, OPCODE_DIV, "div", R),
     instruction_t(OPCODE_JIO, OPCODE_ALU_DEFAULT, "jio", J),
+    instruction_t(OPCODE_WAIT, OPCODE_ALU_DEFAULT, "wait", Z),
 };
 
 // for CPUs without a shift (such as ones that have a rotate instead), the 'ldia' (also known as the 'la' instruction) can use multiple successive adds to shift a register to encode a full 16-bit immediate.
@@ -122,12 +124,19 @@ struct type_jii
 	unsigned opcode : OPCODE_BITS;
 };
 
+struct type_z
+{
+  unsigned zeros : JMP_ADDR_BITS + REG_BITS;
+  unsigned opcode : OPCODE_BITS;
+};
+
 union inst
 {
   type_i itype;
   type_r rtype;
   type_ji jitype;
   type_jii jiitype;
+  type_z ztype;
   unsigned int bits;
 };
 
