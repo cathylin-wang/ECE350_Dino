@@ -1,15 +1,16 @@
 // Define 1 ns as the delay time unit and 100 ps of precision in the waveform
 `timescale 1 ns / 100 ps
 module Wrapper_tb;
-    reg clk, reset;
+    reg clk, reset, up_button;
 
     // module to change
-    Wrapper processor(clk, reset);
+    Wrapper processor(clk, reset, up_button);
     
     initial begin
         // initialize inputs to 0
         clk = 0;
         reset = 1;
+        up_button = 0;
 
         // time delay (ns)
         #10000

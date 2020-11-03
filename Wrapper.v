@@ -39,14 +39,14 @@ module Wrapper(clock, reset, up_button);
                   
 		  ///// RAM
                   .wren(mwe), .address_dmem(memAddr), 
-                  .data(memDataIn), .q_dmem(memDataOut)
+                  .data(memDataIn), .q_dmem(memDataOut),
                   
           //// IO
                   .io_jump(up_button)
                   ); 
                   
     ///// Instruction Memory (ROM)
-    ROM #(.MEMFILE("_smorgasbordtest.mem"))InstMem(.clk(clock), .wEn(1'b0), .addr(instAddr[11:0]), .dataIn(32'b0), .dataOut(instData));
+    ROM #(.MEMFILE("ECE350F2020 ToolChain/jio_test.mem"))InstMem(.clk(clock), .wEn(1'b0), .addr(instAddr[11:0]), .dataIn(32'b0), .dataOut(instData));
     
     ///// Register File
     regfile RegisterFile(.clock(clock), 
