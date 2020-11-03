@@ -17,8 +17,15 @@
  * 
  */
 
-module Wrapper(clock, reset, up_button);
-    input clock, reset, up_button;
+module Wrapper(
+    input clock, 
+    input reset, 
+    output hSync, 		// H Sync Signal
+	output vSync, 		// Veritcal Sync Signal
+	output[3:0] VGA_R,  // Red Signal Bits
+	output[3:0] VGA_G,  // Green Signal Bits
+	output[3:0] VGA_B,  // Blue Signal Bits
+	input up, down);
 
     wire rwe, mwe;
     wire[4:0] rd, rs1, rs2;
@@ -42,7 +49,7 @@ module Wrapper(clock, reset, up_button);
                   .data(memDataIn), .q_dmem(memDataOut),
                   
           //// IO
-                  .io_jump(up_button)
+                  .io_jump(up)
                   ); 
                   
     ///// Instruction Memory (ROM)
@@ -58,5 +65,7 @@ module Wrapper(clock, reset, up_button);
     ///// Processor Memory (RAM)
     RAM ProcMem(.clk(clock), .wEn(mwe), .addr(memAddr[11:0]), .dataIn(memDataIn), .dataOut(memDataOut));
 
+    ///// VGA Controller
+    VGAController vga(clock, reset, hSync, vSync, VGA_R, VGA_G, VBA_B, up, down);
 
 endmodule

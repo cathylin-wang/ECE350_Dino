@@ -7,8 +7,6 @@ module VGAController(
 	output[3:0] VGA_R,  // Red Signal Bits
 	output[3:0] VGA_G,  // Green Signal Bits
 	output[3:0] VGA_B,  // Blue Signal Bits
-	inout ps2_clk,
-	inout ps2_data,
 	input up, down);
 	
 	// Lab Memory Files Location
