@@ -33,7 +33,8 @@ module Wrapper(
                rData, regA, regB,
                memAddr, memDataIn, memDataOut;
 
-    wire screenEnd;
+    wire screenEnd; // 60 Hz
+    wire [31:0] dino_x, dino_y;
     
     ///// Main Processing Unit
     processor CPU(.clock(clock), .reset(reset), .screen_end(screenEnd),
@@ -62,26 +63,26 @@ module Wrapper(
              .ctrl_writeEnable(rwe), .ctrl_reset(reset), 
              .ctrl_writeReg(rd),
              .ctrl_readRegA(rs1), .ctrl_readRegB(rs2), 
-             .data_writeReg(rData), .data_readRegA(regA), .data_readRegB(regB));
+             .data_writeReg(rData), .data_readRegA(regA), .data_readRegB(regB), .r1(dino_x), .r2(dino_y));
              
     ///// Processor Memory (RAM)
     RAM ProcMem(.clk(clock), .wEn(mwe), .addr(memAddr[11:0]), .dataIn(memDataIn), .dataOut(memDataOut));
 
     ///// VGA Controller
-    VGAController vga(clock, reset, hSync, vSync, VGA_R, VGA_G, VBA_B, screenEnd, up, down);
+    VGAController vga(clock, reset, hSync, vSync, VGA_R, VGA_G, VBA_B, screenEnd, up, down, dino_x, dino_y);
 
     // Define counter and audio clock
     // System clock is 100 MHz system clock?
-	reg game_clock = 0;
-	reg[31:0] game_clock_ctr = 0;
-	always @(posedge clock) begin
-		if (game_clock_ctr < 10000000 - 1)  
-			game_clock_ctr <= game_clock_ctr + 1;
-		else begin
-			game_clock_ctr <= 0;
-			game_clock <= ~game_clock;
-		end
-	end
+	// reg game_clock = 0;
+	// reg[31:0] game_clock_ctr = 0;
+	// always @(posedge clock) begin
+	// 	if (game_clock_ctr < 10000000 - 1)  
+	// 		game_clock_ctr <= game_clock_ctr + 1;
+	// 	else begin
+	// 		game_clock_ctr <= 0;
+	// 		game_clock <= ~game_clock;
+	// 	end
+	// end
 
 
 endmodule
