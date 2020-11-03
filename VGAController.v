@@ -8,10 +8,14 @@ module VGAController(
 	output[3:0] VGA_G,  // Green Signal Bits
 	output[3:0] VGA_B,  // Blue Signal Bits
 	output screenEnd,
-	input up, down);
+	input up,
+	input down,
+	input[31:0] dino_x,
+	input[31:0] dino_y);
 	
 	// Lab Memory Files Location
-	localparam FILES_PATH = "Z:/cpu/ECE350_Dino/";
+	localparam FILES_PATH = "Z:/cpu/ECE350_Dino/"; // FOR SAMMY
+	// localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/"; //FOR CATHY
 
 	// Clock divider 100 MHz -> 25 MHz
 	wire clk25; // 25MHz clock
