@@ -6,7 +6,7 @@ Everything else is the same conceptually as the ROM module.
 MEMORY
 */
 `timescale 1ns / 1ps
-module RAM #( parameter DATA_WIDTH = 32, ADDRESS_WIDTH = 12, DEPTH = 4096, MEMFILE = "init_mem.mem") (
+module RAM #( parameter DATA_WIDTH = 32, ADDRESS_WIDTH = 12, DEPTH = 4096, MEMFILE = "assets/init_mem.mem") (
     input wire                     clk,
     input wire                     wEn,
     input wire [ADDRESS_WIDTH-1:0] addr,

@@ -44,7 +44,7 @@ module Wrapper_tb;
     wire [3:0] VGA_R, VGA_G, VGA_B;
 
     // module to change
-    Wrapper processor(clk, reset, hSync, vSync, VGA_R, VGA_G, VGA_B, 1'b0, 1'b0);
+    Wrapper processor(clk, reset, hSync, vSync, VGA_R, VGA_G, VGA_B, 1'b1, 1'b0);
 
     initial begin
         // initialize inputs to 0
