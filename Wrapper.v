@@ -25,7 +25,8 @@ module Wrapper(
 	output[3:0] VGA_R,  // Red Signal Bits
 	output[3:0] VGA_G,  // Green Signal Bits
 	output[3:0] VGA_B,  // Blue Signal Bits
-	input up, down);
+	input up, 
+    input down);
 
     wire rwe, mwe;
     wire[4:0] rd, rs1, rs2;
@@ -69,7 +70,7 @@ module Wrapper(
     RAM ProcMem(.clk(clock), .wEn(mwe), .addr(memAddr[11:0]), .dataIn(memDataIn), .dataOut(memDataOut));
 
     ///// VGA Controller
-    VGAController vga(clock, reset, hSync, vSync, VGA_R, VGA_G, VBA_B, screenEnd, up, down, dino_x, dino_y);
+    VGAController vga(clock, reset, hSync, vSync, VGA_R, VGA_G, VGA_B, screenEnd, up, down, dino_x, dino_y);
 
     // Define counter and audio clock
     // System clock is 100 MHz system clock?

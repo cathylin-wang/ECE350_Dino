@@ -1,0 +1,122 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/RAM.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module RAM
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/ROM.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ROM
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/VGAController.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module VGAController
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/VGATimingGenerator.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module VGATimingGenerator
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/alu.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module alu
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/and32.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module and32
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/booth_ctrl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module booth_ctrl
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/bypass.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bypass
+INFO: [VRFC 10-2458] undeclared symbol readRD, assumed default net type wire [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/bypass.v:8]
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/cla_32bit.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cla_32bit
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/cla_8bit.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cla_8bit
+INFO: [VRFC 10-2458] undeclared symbol c31, assumed default net type wire [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/cla_8bit.v:23]
+INFO: [VRFC 10-2458] undeclared symbol c32, assumed default net type wire [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/cla_8bit.v:24]
+INFO: [VRFC 10-2458] undeclared symbol c33, assumed default net type wire [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/cla_8bit.v:25]
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/counter.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module counter
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/decoder32.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module decoder32
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/dffe_ref.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dffe_ref
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/div.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module div
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/divcounter.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module divcounter
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/dx_latch.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dx_latch
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/fastbranch_bypass.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fastbranch_bypass
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/fd_latch.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fd_latch
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/m_latch.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module m_latch
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/mul.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mul
+INFO: [VRFC 10-2458] undeclared symbol c32, assumed default net type wire [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/mul.v:40]
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/multdiv.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module multdiv
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/mux_2.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mux_2
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/mux_3.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mux_3
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/mux_4.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mux_4
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/mux_8.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mux_8
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/my_tri.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module my_tri
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/not32.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module not32
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/or32.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module or32
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module processor
+INFO: [VRFC 10-2458] undeclared symbol fastBranchPC32, assumed default net type wire [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor.v:200]
+INFO: [VRFC 10-2458] undeclared symbol islw, assumed default net type wire [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor.v:217]
+INFO: [VRFC 10-2458] undeclared symbol pcbranchPC32_n_32, assumed default net type wire [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor.v:231]
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/pw_latch.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module pw_latch
+WARNING: [VRFC 10-3380] identifier 'ir_out' is used before its declaration [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/pw_latch.v:15]
+WARNING: [VRFC 10-3380] identifier 'ir_out' is used before its declaration [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/pw_latch.v:16]
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/regfile.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module regfile
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/register.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module register
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/register5.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module register5
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/register64.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module register64
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/register65.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module register65
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/set_xm_inputs.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module set_xm_inputs
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/shift_left.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module shift_left
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/shift_left1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module shift_left1
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/shift_left16.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module shift_left16
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/shift_left2.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module shift_left2
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/shift_left4.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module shift_left4
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/shift_left8.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module shift_left8
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/shouldReadRD.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module shouldReadRD
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/shouldStall.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module shouldStall
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/sra.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sra
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/sra1.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sra1
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/sra16.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sra16
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/sra2.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sra2
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/sra4.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sra4
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/sra8.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sra8
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/sx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sx
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/sx_T.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ex_T
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/twos_complement.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module twos_complement
+INFO: [VRFC 10-2458] undeclared symbol Cout, assumed default net type wire [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/processor/twos_complement.v:10]
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/Wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Wrapper
+INFO: [VRFC 10-2458] undeclared symbol VBA_B, assumed default net type wire [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/Wrapper.v:72]
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/dino_proj/dino_proj.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl

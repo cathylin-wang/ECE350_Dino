@@ -112,7 +112,7 @@ module VGAController(
 	assign inSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
 	assign colorData = background_data ? 12'd0 : 12'hfff;
 	assign tempColor = (inSquare && sprite_data) ? 12'd0 : colorData;
-		assign colorOut = active ? tempColor : 12'd0; // When not active, output black
+	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
 
 	// Quickly assign the output colors to their channels using concatenation
 	assign {VGA_R, VGA_G, VGA_B} = colorOut;

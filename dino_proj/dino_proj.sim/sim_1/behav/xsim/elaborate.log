@@ -1,0 +1,69 @@
+Vivado Simulator 2020.1
+Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2020.1/bin/unwrapped/win64.o/xelab.exe -wto 5f41f16cd8584d05befedd302b39e286 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot Wrapper_behav xil_defaultlib.Wrapper xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-3091] actual bit length 1 differs from formal bit length 4 for port 'VGA_B' [C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/Wrapper.v:72]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.dffe_ref
+Compiling module xil_defaultlib.register
+Compiling module xil_defaultlib.and32
+Compiling module xil_defaultlib.or32
+Compiling module xil_defaultlib.cla_8bit
+Compiling module xil_defaultlib.cla_32bit
+Compiling module xil_defaultlib.fd_latch
+Compiling module xil_defaultlib.shouldReadRD
+Compiling module xil_defaultlib.shouldStall
+Compiling module xil_defaultlib.fastbranch_bypass
+Compiling module xil_defaultlib.ex_T
+Compiling module xil_defaultlib.sx
+Compiling module xil_defaultlib.dx_latch
+Compiling module xil_defaultlib.not32
+Compiling module xil_defaultlib.mux_2
+Compiling module xil_defaultlib.shift_left16
+Compiling module xil_defaultlib.shift_left8
+Compiling module xil_defaultlib.shift_left4
+Compiling module xil_defaultlib.shift_left2
+Compiling module xil_defaultlib.shift_left1
+Compiling module xil_defaultlib.shift_left
+Compiling module xil_defaultlib.sra16
+Compiling module xil_defaultlib.sra8
+Compiling module xil_defaultlib.sra4
+Compiling module xil_defaultlib.sra2
+Compiling module xil_defaultlib.sra1
+Compiling module xil_defaultlib.sra
+Compiling module xil_defaultlib.mux_4
+Compiling module xil_defaultlib.mux_8
+Compiling module xil_defaultlib.alu
+Compiling module xil_defaultlib.set_xm_inputs
+Compiling module xil_defaultlib.bypass
+Compiling module xil_defaultlib.mux_3
+Compiling module xil_defaultlib.counter
+Compiling module xil_defaultlib.register65
+Compiling module xil_defaultlib.booth_ctrl
+Compiling module xil_defaultlib.mul
+Compiling module xil_defaultlib.twos_complement
+Compiling module xil_defaultlib.divcounter
+Compiling module xil_defaultlib.register64
+Compiling module xil_defaultlib.div
+Compiling module xil_defaultlib.multdiv
+Compiling module xil_defaultlib.pw_latch
+Compiling module xil_defaultlib.register5
+Compiling module xil_defaultlib.m_latch
+Compiling module xil_defaultlib.processor
+Compiling module xil_defaultlib.ROM(MEMFILE="ECE350F2020_ToolCha...
+Compiling module xil_defaultlib.decoder32
+Compiling module xil_defaultlib.my_tri
+Compiling module xil_defaultlib.regfile
+Compiling module xil_defaultlib.RAM
+Compiling module xil_defaultlib.VGATimingGenerator_default
+Compiling module xil_defaultlib.RAM(DATA_WIDTH=1,ADDRESS_WIDTH=1...
+Compiling module xil_defaultlib.RAM(DATA_WIDTH=1,ADDRESS_WIDTH=2...
+Compiling module xil_defaultlib.VGAController_default
+Compiling module xil_defaultlib.Wrapper
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot Wrapper_behav
