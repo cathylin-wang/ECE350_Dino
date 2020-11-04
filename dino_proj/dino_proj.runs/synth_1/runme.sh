@@ -24,7 +24,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='Z:/cpu/ECE350_Dino/dino_proj/dino_proj.runs/synth_1'
+HD_PWD='C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/dino_proj/dino_proj.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
@@ -40,4 +40,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log VGAController.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source VGAController.tcl
+EAStep vivado -log Wrapper.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source Wrapper.tcl

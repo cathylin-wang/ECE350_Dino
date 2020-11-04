@@ -1,11 +1,11 @@
 module regfile(clock, ctrl_writeEnable, ctrl_reset, ctrl_writeReg, 
-	ctrl_readRegA, ctrl_readRegB, data_writeReg, data_readRegA, data_readRegB);
+	ctrl_readRegA, ctrl_readRegB, data_writeReg, data_readRegA, data_readRegB, r1, r2);
 
 	input clock, ctrl_writeEnable, ctrl_reset;
 	input [4:0] ctrl_writeReg, ctrl_readRegA, ctrl_readRegB;
 	input [31:0] data_writeReg;
 
-	output [31:0] data_readRegA, data_readRegB;
+	output [31:0] data_readRegA, data_readRegB, r1, r2;
 
 	wire [31:0] write_enables, decode_write, reg_o0, reg_o1, reg_o2, reg_o3, reg_o4, reg_o5, reg_o6, reg_o7, reg_o8, reg_o9, reg_o10, reg_o11, reg_o12, reg_o13, reg_o14, reg_o15, reg_o16, reg_o17, reg_o18, reg_o19, reg_o20, reg_o21, reg_o22, reg_o23, reg_o24, reg_o25, reg_o26, reg_o27, reg_o28, reg_o29, reg_o30, reg_o31;
 
@@ -152,5 +152,8 @@ module regfile(clock, ctrl_writeEnable, ctrl_reset, ctrl_writeReg,
 	my_tri rs2_tri29(data_readRegB, reg_o29, rs2[29]);
 	my_tri rs2_tri30(data_readRegB, reg_o30, rs2[30]);
 	my_tri rs2_tri31(data_readRegB, reg_o31, rs2[31]);
+
+	assign r1 = reg_o1;
+	assign r2 = reg_o2;
 
 endmodule

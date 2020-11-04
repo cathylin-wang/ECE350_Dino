@@ -1,6 +1,6 @@
 // Clock on E3
-set_property PACKAGE_PIN E3 [get_ports clk]
-set_property IOSTANDARD LVCMOS33 [get_ports clk]
+set_property PACKAGE_PIN E3 [get_ports clock]
+set_property IOSTANDARD LVCMOS33 [get_ports clock]
 
 // Rest Signal
 set_property PACKAGE_PIN N17 [get_ports reset]
@@ -37,12 +37,6 @@ set_property PACKAGE_PIN B11 [get_ports hSync]
 set_property PACKAGE_PIN B12 [get_ports vSync]
 set_property IOSTANDARD LVCMOS33 [get_ports hSync]
 set_property IOSTANDARD LVCMOS33 [get_ports vSync]
-
-// PS2 Stuff
-set_property PACKAGE_PIN F4 [get_ports ps2_clk]
-set_property PACKAGE_PIN B2 [get_ports ps2_data]
-set_property IOSTANDARD LVCMOS33 [get_ports ps2_clk]
-set_property IOSTANDARD LVCMOS33 [get_ports ps2_data]
 
 set_property IOSTANDARD LVCMOS33 [get_ports down]
 set_property PACKAGE_PIN P18 [get_ports down]

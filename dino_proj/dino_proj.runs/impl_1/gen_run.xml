@@ -1,79 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7a100tcsg324-1" LaunchTime="1604022851">
-  <File Type="BITSTR-BMM" Name="VGAController_bd.bmm"/>
-  <File Type="OPT-METHODOLOGY-DRC" Name="VGAController_methodology_drc_opted.rpt"/>
-  <File Type="INIT-TIMING" Name="VGAController_timing_summary_init.rpt"/>
-  <File Type="ROUTE-PWR" Name="VGAController_power_routed.rpt"/>
-  <File Type="PA-TCL" Name="VGAController.tcl"/>
-  <File Type="OPT-TIMING" Name="VGAController_timing_summary_opted.rpt"/>
-  <File Type="OPT-DCP" Name="VGAController_opt.dcp"/>
-  <File Type="ROUTE-PWR-SUM" Name="VGAController_power_summary_routed.pb"/>
-  <File Type="REPORTS-TCL" Name="VGAController_reports.tcl"/>
-  <File Type="OPT-DRC" Name="VGAController_drc_opted.rpt"/>
-  <File Type="OPT-HWDEF" Name="VGAController.hwdef"/>
-  <File Type="PWROPT-DCP" Name="VGAController_pwropt.dcp"/>
-  <File Type="PWROPT-DRC" Name="VGAController_drc_pwropted.rpt"/>
-  <File Type="PWROPT-TIMING" Name="VGAController_timing_summary_pwropted.rpt"/>
-  <File Type="PLACE-DCP" Name="VGAController_placed.dcp"/>
-  <File Type="PLACE-IO" Name="VGAController_io_placed.rpt"/>
-  <File Type="PLACE-CLK" Name="VGAController_clock_utilization_placed.rpt"/>
-  <File Type="PLACE-UTIL" Name="VGAController_utilization_placed.rpt"/>
-  <File Type="PLACE-UTIL-PB" Name="VGAController_utilization_placed.pb"/>
-  <File Type="PLACE-CTRL" Name="VGAController_control_sets_placed.rpt"/>
-  <File Type="PLACE-SIMILARITY" Name="VGAController_incremental_reuse_placed.rpt"/>
-  <File Type="PLACE-PRE-SIMILARITY" Name="VGAController_incremental_reuse_pre_placed.rpt"/>
-  <File Type="PLACE-TIMING" Name="VGAController_timing_summary_placed.rpt"/>
-  <File Type="POSTPLACE-PWROPT-DCP" Name="VGAController_postplace_pwropt.dcp"/>
-  <File Type="BG-BIN" Name="VGAController.bin"/>
-  <File Type="POSTPLACE-PWROPT-TIMING" Name="VGAController_timing_summary_postplace_pwropted.rpt"/>
-  <File Type="PHYSOPT-DCP" Name="VGAController_physopt.dcp"/>
-  <File Type="PHYSOPT-DRC" Name="VGAController_drc_physopted.rpt"/>
-  <File Type="BITSTR-MSK" Name="VGAController.msk"/>
-  <File Type="PHYSOPT-TIMING" Name="VGAController_timing_summary_physopted.rpt"/>
-  <File Type="ROUTE-ERROR-DCP" Name="VGAController_routed_error.dcp"/>
-  <File Type="ROUTE-DCP" Name="VGAController_routed.dcp"/>
-  <File Type="ROUTE-BLACKBOX-DCP" Name="VGAController_routed_bb.dcp"/>
-  <File Type="ROUTE-DRC" Name="VGAController_drc_routed.rpt"/>
-  <File Type="ROUTE-DRC-PB" Name="VGAController_drc_routed.pb"/>
-  <File Type="ROUTE-DRC-RPX" Name="VGAController_drc_routed.rpx"/>
-  <File Type="BITSTR-MMI" Name="VGAController.mmi"/>
-  <File Type="ROUTE-METHODOLOGY-DRC" Name="VGAController_methodology_drc_routed.rpt"/>
-  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="VGAController_methodology_drc_routed.rpx"/>
-  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="VGAController_methodology_drc_routed.pb"/>
-  <File Type="ROUTE-PWR-RPX" Name="VGAController_power_routed.rpx"/>
-  <File Type="ROUTE-STATUS" Name="VGAController_route_status.rpt"/>
-  <File Type="ROUTE-STATUS-PB" Name="VGAController_route_status.pb"/>
-  <File Type="ROUTE-TIMINGSUMMARY" Name="VGAController_timing_summary_routed.rpt"/>
-  <File Type="ROUTE-TIMING-PB" Name="VGAController_timing_summary_routed.pb"/>
-  <File Type="ROUTE-TIMING-RPX" Name="VGAController_timing_summary_routed.rpx"/>
-  <File Type="ROUTE-SIMILARITY" Name="VGAController_incremental_reuse_routed.rpt"/>
-  <File Type="ROUTE-CLK" Name="VGAController_clock_utilization_routed.rpt"/>
-  <File Type="ROUTE-BUS-SKEW" Name="VGAController_bus_skew_routed.rpt"/>
-  <File Type="ROUTE-BUS-SKEW-PB" Name="VGAController_bus_skew_routed.pb"/>
-  <File Type="ROUTE-BUS-SKEW-RPX" Name="VGAController_bus_skew_routed.rpx"/>
-  <File Type="POSTROUTE-PHYSOPT-DCP" Name="VGAController_postroute_physopt.dcp"/>
-  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="VGAController_postroute_physopt_bb.dcp"/>
-  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="VGAController_timing_summary_postroute_physopted.rpt"/>
-  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="VGAController_timing_summary_postroute_physopted.pb"/>
-  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="VGAController_timing_summary_postroute_physopted.rpx"/>
-  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="VGAController_bus_skew_postroute_physopted.rpt"/>
-  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="VGAController_bus_skew_postroute_physopted.pb"/>
-  <File Type="BG-BIT" Name="VGAController.bit"/>
-  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="VGAController_bus_skew_postroute_physopted.rpx"/>
-  <File Type="BITSTR-RBT" Name="VGAController.rbt"/>
-  <File Type="BITSTR-NKY" Name="VGAController.nky"/>
-  <File Type="PDI-FILE" Name="VGAController.pdi"/>
-  <File Type="RCFI_FILE" Name="VGAController.rcfi"/>
-  <File Type="CFI_FILE" Name="VGAController.cfi"/>
-  <File Type="RNPI_FILE" Name="VGAController.rnpi"/>
-  <File Type="NPI_FILE" Name="VGAController.npi"/>
-  <File Type="RBD_FILE" Name="VGAController.rbd"/>
+<GenRun Id="impl_1" LaunchPart="xc7a100tcsg324-1" LaunchTime="1604454025">
+  <File Type="BITSTR-BMM" Name="Wrapper_bd.bmm"/>
+  <File Type="OPT-METHODOLOGY-DRC" Name="Wrapper_methodology_drc_opted.rpt"/>
+  <File Type="INIT-TIMING" Name="Wrapper_timing_summary_init.rpt"/>
+  <File Type="ROUTE-PWR" Name="Wrapper_power_routed.rpt"/>
+  <File Type="PA-TCL" Name="Wrapper.tcl"/>
+  <File Type="OPT-TIMING" Name="Wrapper_timing_summary_opted.rpt"/>
+  <File Type="OPT-DCP" Name="Wrapper_opt.dcp"/>
+  <File Type="ROUTE-PWR-SUM" Name="Wrapper_power_summary_routed.pb"/>
+  <File Type="REPORTS-TCL" Name="Wrapper_reports.tcl"/>
+  <File Type="OPT-DRC" Name="Wrapper_drc_opted.rpt"/>
+  <File Type="OPT-HWDEF" Name="Wrapper.hwdef"/>
+  <File Type="PWROPT-DCP" Name="Wrapper_pwropt.dcp"/>
+  <File Type="PWROPT-DRC" Name="Wrapper_drc_pwropted.rpt"/>
+  <File Type="PWROPT-TIMING" Name="Wrapper_timing_summary_pwropted.rpt"/>
+  <File Type="PLACE-DCP" Name="Wrapper_placed.dcp"/>
+  <File Type="PLACE-IO" Name="Wrapper_io_placed.rpt"/>
+  <File Type="PLACE-CLK" Name="Wrapper_clock_utilization_placed.rpt"/>
+  <File Type="PLACE-UTIL" Name="Wrapper_utilization_placed.rpt"/>
+  <File Type="PLACE-UTIL-PB" Name="Wrapper_utilization_placed.pb"/>
+  <File Type="PLACE-CTRL" Name="Wrapper_control_sets_placed.rpt"/>
+  <File Type="PLACE-SIMILARITY" Name="Wrapper_incremental_reuse_placed.rpt"/>
+  <File Type="PLACE-PRE-SIMILARITY" Name="Wrapper_incremental_reuse_pre_placed.rpt"/>
+  <File Type="PLACE-TIMING" Name="Wrapper_timing_summary_placed.rpt"/>
+  <File Type="POSTPLACE-PWROPT-DCP" Name="Wrapper_postplace_pwropt.dcp"/>
+  <File Type="BG-BIN" Name="Wrapper.bin"/>
+  <File Type="POSTPLACE-PWROPT-TIMING" Name="Wrapper_timing_summary_postplace_pwropted.rpt"/>
+  <File Type="PHYSOPT-DCP" Name="Wrapper_physopt.dcp"/>
+  <File Type="PHYSOPT-DRC" Name="Wrapper_drc_physopted.rpt"/>
+  <File Type="BITSTR-MSK" Name="Wrapper.msk"/>
+  <File Type="PHYSOPT-TIMING" Name="Wrapper_timing_summary_physopted.rpt"/>
+  <File Type="ROUTE-ERROR-DCP" Name="Wrapper_routed_error.dcp"/>
+  <File Type="ROUTE-DCP" Name="Wrapper_routed.dcp"/>
+  <File Type="ROUTE-BLACKBOX-DCP" Name="Wrapper_routed_bb.dcp"/>
+  <File Type="ROUTE-DRC" Name="Wrapper_drc_routed.rpt"/>
+  <File Type="ROUTE-DRC-PB" Name="Wrapper_drc_routed.pb"/>
+  <File Type="ROUTE-DRC-RPX" Name="Wrapper_drc_routed.rpx"/>
+  <File Type="BITSTR-MMI" Name="Wrapper.mmi"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="Wrapper_methodology_drc_routed.rpt"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="Wrapper_methodology_drc_routed.rpx"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="Wrapper_methodology_drc_routed.pb"/>
+  <File Type="ROUTE-PWR-RPX" Name="Wrapper_power_routed.rpx"/>
+  <File Type="ROUTE-STATUS" Name="Wrapper_route_status.rpt"/>
+  <File Type="ROUTE-STATUS-PB" Name="Wrapper_route_status.pb"/>
+  <File Type="ROUTE-TIMINGSUMMARY" Name="Wrapper_timing_summary_routed.rpt"/>
+  <File Type="ROUTE-TIMING-PB" Name="Wrapper_timing_summary_routed.pb"/>
+  <File Type="ROUTE-TIMING-RPX" Name="Wrapper_timing_summary_routed.rpx"/>
+  <File Type="ROUTE-SIMILARITY" Name="Wrapper_incremental_reuse_routed.rpt"/>
+  <File Type="ROUTE-CLK" Name="Wrapper_clock_utilization_routed.rpt"/>
+  <File Type="ROUTE-BUS-SKEW" Name="Wrapper_bus_skew_routed.rpt"/>
+  <File Type="ROUTE-BUS-SKEW-PB" Name="Wrapper_bus_skew_routed.pb"/>
+  <File Type="ROUTE-BUS-SKEW-RPX" Name="Wrapper_bus_skew_routed.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-DCP" Name="Wrapper_postroute_physopt.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-BLACKBOX-DCP" Name="Wrapper_postroute_physopt_bb.dcp"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING" Name="Wrapper_timing_summary_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-PB" Name="Wrapper_timing_summary_postroute_physopted.pb"/>
+  <File Type="POSTROUTE-PHYSOPT-TIMING-RPX" Name="Wrapper_timing_summary_postroute_physopted.rpx"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW" Name="Wrapper_bus_skew_postroute_physopted.rpt"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-PB" Name="Wrapper_bus_skew_postroute_physopted.pb"/>
+  <File Type="BG-BIT" Name="Wrapper.bit"/>
+  <File Type="POSTROUTE-PHYSOPT-BUS-SKEW-RPX" Name="Wrapper_bus_skew_postroute_physopted.rpx"/>
+  <File Type="BITSTR-RBT" Name="Wrapper.rbt"/>
+  <File Type="BITSTR-NKY" Name="Wrapper.nky"/>
+  <File Type="PDI-FILE" Name="Wrapper.pdi"/>
+  <File Type="RCFI_FILE" Name="Wrapper.rcfi"/>
+  <File Type="CFI_FILE" Name="Wrapper.cfi"/>
+  <File Type="RNPI_FILE" Name="Wrapper.rnpi"/>
+  <File Type="NPI_FILE" Name="Wrapper.npi"/>
+  <File Type="RBD_FILE" Name="Wrapper.rbd"/>
   <File Type="BITSTR-LTX" Name="debug_nets.ltx"/>
-  <File Type="BITSTR-LTX" Name="VGAController.ltx"/>
-  <File Type="BITSTR-SYSDEF" Name="VGAController.sysdef"/>
-  <File Type="BG-BGN" Name="VGAController.bgn"/>
-  <File Type="BG-DRC" Name="VGAController.drc"/>
-  <File Type="RDI-RDI" Name="VGAController.vdi"/>
+  <File Type="BITSTR-LTX" Name="Wrapper.ltx"/>
+  <File Type="BITSTR-SYSDEF" Name="Wrapper.sysdef"/>
+  <File Type="BG-BGN" Name="Wrapper.bgn"/>
+  <File Type="BG-DRC" Name="Wrapper.drc"/>
+  <File Type="RDI-RDI" Name="Wrapper.vdi"/>
   <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>
@@ -84,7 +84,7 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PPRDIR/../VGATimingGenerator.v">
+    <File Path="$PPRDIR/../ROM.v">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
@@ -98,13 +98,398 @@
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PPRDIR/../dino.mem">
+    <File Path="$PPRDIR/../VGATimingGenerator.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/alu.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/and32.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/booth_ctrl.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/bypass.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/cla_32bit.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/cla_8bit.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/counter.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/decoder32.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/dffe_ref.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/div.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/divcounter.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/dx_latch.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/fastbranch_bypass.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/fd_latch.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/m_latch.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/mul.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/multdiv.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/mux_2.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/mux_3.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/mux_4.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/mux_8.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/my_tri.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/not32.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/or32.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/pw_latch.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/regfile.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/register.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/register5.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/register64.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/register65.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/set_xm_inputs.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/shift_left.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/shift_left1.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/shift_left16.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/shift_left2.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/shift_left4.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/shift_left8.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/shouldReadRD.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/shouldStall.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/sra.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/sra1.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/sra16.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/sra2.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/sra4.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/sra8.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/sx.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/sx_T.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/twos_complement.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../Wrapper.v">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/problem_lwfastbranch.mem">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
       </FileInfo>
     </File>
-    <File Path="$PPRDIR/../background.mem">
+    <File Path="$PPRDIR/../processor/init_mem.mem">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/mux_32.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../processor/counter_tb.v">
+      <FileInfo>
+        <Attr Name="AutoDisabled" Val="1"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../assets/dino.mem">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PPRDIR/../assets/background.mem">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="simulation"/>
@@ -112,19 +497,20 @@
     </File>
     <Config>
       <Option Name="DesignMode" Val="RTL"/>
-      <Option Name="TopModule" Val="VGAController"/>
+      <Option Name="TopModule" Val="Wrapper"/>
       <Option Name="TopAutoSet" Val="TRUE"/>
     </Config>
   </FileSet>
   <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
     <Filter Type="Constrs"/>
-    <File Path="$PPRDIR/../constraints.xdc">
+    <File Path="$PPRDIR/constraints.xdc">
       <FileInfo>
         <Attr Name="UsedIn" Val="synthesis"/>
         <Attr Name="UsedIn" Val="implementation"/>
       </FileInfo>
     </File>
     <Config>
+      <Option Name="TargetConstrsFile" Val="$PPRDIR/constraints.xdc"/>
       <Option Name="ConstrsType" Val="XDC"/>
     </Config>
   </FileSet>

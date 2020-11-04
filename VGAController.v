@@ -1,9 +1,9 @@
 `timescale 1 ns/ 100 ps
 module VGAController(     
-	input clk, 			// 100 MHz System Clock
+	input clk, 			// 100 MHz system Clock
 	input reset, 		// Reset Signal
-	output hSync, 		// H Sync Signal
-	output vSync, 		// Veritcal Sync Signal
+	output hSync, 		// H sync Signal
+	output vSync, 		// Veritcal sync Signal
 	output[3:0] VGA_R,  // Red Signal Bits
 	output[3:0] VGA_G,  // Green Signal Bits
 	output[3:0] VGA_B,  // Blue Signal Bits
@@ -14,8 +14,8 @@ module VGAController(
 	input[31:0] dino_y);
 	
 	// Lab Memory Files Location
-	localparam FILES_PATH = "Z:/cpu/ECE350_Dino/"; // FOR SAMMY
-	// localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/"; //FOR CATHY
+	// localparam FILES_PATH = "Z:/cpu/ECE350_Dino/"; // FOR SAMMY
+	localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
 
 	// Clock divider 100 MHz -> 25 MHz
 	wire clk25; // 25MHz clock
@@ -68,7 +68,7 @@ module VGAController(
 
 	reg[12:0] offset = 0;
 
-	reg[31:0] sx = 30, sy = GROUND-60;
+	// reg[31:0] dino_x = 30, dino_y = GROUND-60;
 	wire inSquare;
 
 	// count
@@ -89,7 +89,7 @@ module VGAController(
 		.MEMFILE({FILES_PATH, "dino.mem"}))  // Memory initialization
 	SpritesData(
 		.clk(clk), 							   	   // Rising edge of the 100 MHz clk
-		.addr(0 + offset),					       // Address from the ImageData RAM
+		.addr(13'd0 + offset),					       // Address from the ImageData RAM
 		.dataOut(sprite_data),				       // 1 or 0 at current address
 		.wEn(1'b0)); 						       // We're always reading
 	
@@ -109,19 +109,7 @@ module VGAController(
 	// Assign to output color from register if active
 	wire[BITS_PER_COLOR-1:0] colorOut; 			  // Output color 
 
-	// input left, right, up, down;
-	always @(posedge clk) begin
-		if (screenEnd) begin
-			if (up) begin
-				sy <= sy - 1;
-			end
-			else if (down) begin
-				sy <= sy + 1;
-			end
-		end
-	end
-    
-	assign inSquare = x >= sx & x < (sx + 60) & y >= sy & y < (sy + 60);
+	assign inSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
 	assign colorData = background_data ? 12'd0 : 12'hfff;
 	assign tempColor = (inSquare && sprite_data) ? 12'd0 : colorData;
 		assign colorOut = active ? tempColor : 12'd0; // When not active, output black

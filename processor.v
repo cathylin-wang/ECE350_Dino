@@ -77,6 +77,7 @@ module processor(
 
     //fast branch bypass
     wire[31:0] fb_by_a, fb_by_b;
+    wire doFastBranch;
 
 
     /******** DECODE ********/
@@ -201,7 +202,6 @@ module processor(
     assign fastBranchPC_rd = (fd_jr) ? fb_by_b : fast_pcN; //PC = rd if jr
     assign fastBranchPC = (fd_jal | fd_j | fd_bex | fd_jio) ? fd_t : fastBranchPC_rd; // PC = T if jal or j or bex
 
-    wire doFastBranch;
     assign doFastBranch = (fd_bne && ~(fb_by_a == fb_by_b)) //bne & rd != rs
         | (fd_bex & (| fb_by_a)) //bex and rstatus != 0
         | fd_j | fd_jal | fd_jr

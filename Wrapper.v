@@ -56,7 +56,7 @@ module Wrapper(
                   ); 
                   
     ///// Instruction Memory (ROM)
-    ROM #(.MEMFILE("ECE350F2020 ToolChain/jio_test.mem"))InstMem(.clk(clock), .wEn(1'b0), .addr(instAddr[11:0]), .dataIn(32'b0), .dataOut(instData));
+    ROM #(.MEMFILE("ECE350F2020 ToolChain/game_inst.mem"))InstMem(.clk(clock), .wEn(1'b0), .addr(instAddr[11:0]), .dataIn(32'b0), .dataOut(instData));
     
     ///// Register File
     regfile RegisterFile(.clock(clock), 
