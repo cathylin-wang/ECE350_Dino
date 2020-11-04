@@ -1,7 +1,7 @@
 .text
 
-addi $r1 $r0 30
-addi $r2 $r0 275
+addi $r1, $r0, 30
+addi $r2, $r0, 275
 
 io_loop:
     jio     buttonPress
