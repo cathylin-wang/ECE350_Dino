@@ -69,8 +69,8 @@ module VGAController(
 
 	reg[12:0] offset = 0;
 
-	reg[31:0] dino2_x = 200, dino2_y = 200;
-	wire inSquare, inSquare2;
+	// reg[31:0] dino2_x = 200, dino2_y = 200;
+	wire inSquare;
 
 	// count
 	always @(posedge clk25 or posedge reset) begin
@@ -111,9 +111,9 @@ module VGAController(
 	wire[BITS_PER_COLOR-1:0] colorOut; 			  // Output color 
 
 	assign inSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
-	assign inSquare2 = x >= dino2_x & x < (dino2_x + 60) & y >= dino2_y & y < (dino2_y + 60);
+	// assign inSquare2 = x >= dino2_x & x < (dino2_x + 60) & y >= dino2_y & y < (dino2_y + 60);
 	assign colorData = background_data ? 12'd0 : 12'hfff;
-	assign tempColor = ((inSquare || inSquare2) && sprite_data) ? 12'd0 : colorData;
+	assign tempColor = (inSquare && sprite_data) ? 12'd0 : colorData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
 
 	// Quickly assign the output colors to their channels using concatenation
