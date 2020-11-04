@@ -26,8 +26,7 @@ module Wrapper(
 	output[3:0] VGA_G,  // Green Signal Bits
 	output[3:0] VGA_B,  // Blue Signal Bits
 	input up, 
-    input down,
-    output[8:0] dx_probe);
+    input down);
 
     wire rwe, mwe;
     wire[4:0] rd, rs1, rs2;
@@ -37,8 +36,7 @@ module Wrapper(
 
     wire screenEnd; // 60 Hz
     wire [31:0] dino_x, dino_y;
-    assign dx_probe = dino_x[8:0];
-    
+
     ///// Main Processing Unit
     processor CPU(.clock(clock), .reset(reset), .screen_end(screenEnd),
                   
