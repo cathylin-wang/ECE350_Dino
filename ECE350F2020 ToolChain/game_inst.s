@@ -1,6 +1,9 @@
 .text
 
-addi $r1, $r0, 45
+nop
+nop
+nop
+addi $r1, $r0, 40
 addi $r2, $r0, 275
 
 io_loop:
