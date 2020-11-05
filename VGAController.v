@@ -71,6 +71,7 @@ module VGAController(
 	reg[12:0] cacti_offset = 0;
 
 	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
+	wire[31:0] cacti_update;
 	wire inSquare, cactiSquare;
 
 	// count
@@ -89,14 +90,18 @@ module VGAController(
 		end
 	end
 	
+	assign cacti_update = (cacti_x < 80) ? 550 : cacti_x-1;
 	// move cactus on slower clock
-	always @(posedge screenEnd or posedge reset) begin
-		if (reset || cacti_x <= 150) begin
-			cacti_x <= 550;
-		end
-		else begin
-			cacti_x <= cacti_x-1;
-		end
+	// always @(posedge screenEnd or posedge reset) begin
+	always @(posedge screenEnd) begin
+		cacti_x <= cacti_update;
+		// cacti_x <= (reset || cacti_x < 80) ? 550 : cacti_x-1;
+		// if (reset || cacti_x <= 80) begin
+		// 	cacti_x <= 550;
+		// end
+		// else begin
+		// 	cacti_x <= cacti_x-1;
+		// end
 	end
 
 	// dino

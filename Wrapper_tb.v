@@ -18,7 +18,7 @@ module Wrapper_tb;
         #1 reset = 0;
 
         // time delay (ns)
-        #10000
+        #1000
         
         //end testbrach
         $finish;
