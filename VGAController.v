@@ -70,7 +70,7 @@ module VGAController(
 	reg[12:0] offset = 0;
 	reg[12:0] cacti_offset = 0;
 
-	reg[31:0] cacti_x = 200, cacti_y = GROUND-70;
+	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
 	wire inSquare, cactiSquare;
 
 	// count
@@ -79,29 +79,25 @@ module VGAController(
 			offset <= 13'd0;
 			cacti_offset <= 13'd0;
 		end
-		else if (inSquare) begin
-			offset <= offset+1;
-		end
-	end
-
-	always @(posedge clk25 or posedge reset) begin
-		if (reset || screenEnd) begin
-			cacti_offset <= 13'd0;
-		end
-		else if (cactiSquare) begin
-			cacti_offset <= cacti_offset+1;
+		else begin
+			if (inSquare) begin
+				offset <= offset+1;
+			end
+			if (cactiSquare) begin
+				cacti_offset <= cacti_offset+1;
+			end
 		end
 	end
 	
 	// move cactus on slower clock
-	// always @(posedge clk25 or posedge reset) begin
-	// 	if (reset || cacti_x < -100) begin
-	// 		cacti_x <= 13'd740;
-	// 	end
-	// 	// else if (screenEnd) begin
-	// 		cacti_x <= cacti_x-1;
-	// 	// end
-	// end
+	always @(posedge screenEnd or posedge reset) begin
+		if (reset || cacti_x <= 150) begin
+			cacti_x <= 550;
+		end
+		else begin
+			cacti_x <= cacti_x-1;
+		end
+	end
 
 	// dino
 	RAM #(
@@ -143,8 +139,8 @@ module VGAController(
 	// Assign to output color from register if active
 	wire[BITS_PER_COLOR-1:0] colorOut; 			  // Output color 
 
-	assign inSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y <= (dino_y + 60);
-	assign cactiSquare = x >= cacti_x & x < (cacti_x + 49) & y >= cacti_y & y <= (cacti_y + 80);
+	assign inSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
+	assign cactiSquare = x >= cacti_x & x < (cacti_x + 49) & y >= cacti_y & y < (cacti_y + 80);
 	assign colorData = background_data || (cactiSquare && cacti_data) ? 12'd0 : 12'hfff; // temp because cactus is still
 	assign tempColor = (inSquare && sprite_data) ? 12'd0 : colorData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black

@@ -1,5 +1,5 @@
 $date
-	Thu Nov  5 00:30:56 2020
+	Thu Nov  5 09:19:22 2020
 $end
 $version
 	Icarus Verilog
@@ -16885,8 +16885,8 @@ z?m
 b0 >m
 b0 =m
 b0 <m
-b100001001 ;m
-b1011100100 :m
+b11111111 ;m
+b1000100101 :m
 b0 9m
 b1111 8m
 b1111 7m
