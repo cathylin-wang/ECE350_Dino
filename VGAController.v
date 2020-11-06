@@ -15,8 +15,8 @@ module VGAController(
 	
 	// Lab Memory Files Location
 	// localparam FILES_PATH = "/Users/smwhitt/Duke/2021/F2020/ece350/cpu/ECE350_Dino/assets/"; // FOR SAMMY waveform
-	// localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
-	localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
+	localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
+	// localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
 
 	// Clock divider 100 MHz -> 25 MHz
 	wire clk25; // 25MHz clock
@@ -65,43 +65,20 @@ module VGAController(
 	wire[BITS_PER_COLOR-1:0] colorData, tempColor; // 12-bit color data at current pixel
 
 	// SPRITES CODE
-	wire sprite_data, cacti_data, background_data;
+	wire sprite_data, background_data;
 
 	reg[12:0] offset = 0;
-	reg[12:0] cacti_offset = 0;
 
-	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
-	wire[31:0] cacti_update;
-	wire inSquare, cactiSquare;
+	wire inSquare;
 
 	// count
 	always @(posedge clk25 or posedge reset) begin
 		if (reset || screenEnd) begin
 			offset <= 13'd0;
-			cacti_offset <= 13'd0;
 		end
-		else begin
-			if (inSquare) begin
-				offset <= offset+1;
-			end
-			if (cactiSquare) begin
-				cacti_offset <= cacti_offset+1;
-			end
+		else if (inSquare) begin
+			offset <= offset+1;
 		end
-	end
-	
-	assign cacti_update = (cacti_x < 80) ? 550 : cacti_x-1;
-	// move cactus on slower clock
-	// always @(posedge screenEnd or posedge reset) begin
-	always @(posedge screenEnd) begin
-		cacti_x <= cacti_update;
-		// cacti_x <= (reset || cacti_x < 80) ? 550 : cacti_x-1;
-		// if (reset || cacti_x <= 80) begin
-		// 	cacti_x <= 550;
-		// end
-		// else begin
-		// 	cacti_x <= cacti_x-1;
-		// end
 	end
 
 	// dino
@@ -114,18 +91,6 @@ module VGAController(
 		.clk(clk), 							   	   // Rising edge of the 100 MHz clk
 		.addr(13'd0 + offset),					       // Address from the ImageData RAM
 		.dataOut(sprite_data),				       // 1 or 0 at current address
-		.wEn(1'b0)); 						       // We're always reading
-
-	// cacti
-	RAM #(
-		.DEPTH(49*80), 		       // sprite mem file size		
-		.DATA_WIDTH(1), 		       // either 1 or 0
-		.ADDRESS_WIDTH(13),     // Set address width according to the color count
-		.MEMFILE({FILES_PATH, "cacti.mem"}))  // Memory initialization
-	CactiData(
-		.clk(clk), 							   	   // Rising edge of the 100 MHz clk
-		.addr(13'd0 + cacti_offset),					// Address from the ImageData RAM
-		.dataOut(cacti_data),				// 1 or 0 at current address
 		.wEn(1'b0)); 						       // We're always reading
 	
 	// background
@@ -145,8 +110,7 @@ module VGAController(
 	wire[BITS_PER_COLOR-1:0] colorOut; 			  // Output color 
 
 	assign inSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
-	assign cactiSquare = x >= cacti_x & x < (cacti_x + 49) & y >= cacti_y & y < (cacti_y + 80);
-	assign colorData = background_data || (cactiSquare && cacti_data) ? 12'd0 : 12'hfff; // temp because cactus is still
+	assign colorData = background_data ? 12'd0 : 12'hfff; // temp because cactus is still
 	assign tempColor = (inSquare && sprite_data) ? 12'd0 : colorData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
 
