@@ -90,7 +90,7 @@ module VGAController(
 		end
 	end
 	
-	assign cacti_update = (cacti_x < 20) ? 550 : cacti_x-1;
+	assign cacti_update = (cacti_x < 10) ? 550 : cacti_x-1;
 	// move cactus on slower clock
 	// always @(posedge screenEnd or posedge reset) begin
 	always @(posedge screenEnd) begin
