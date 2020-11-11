@@ -11,7 +11,8 @@ module VGAController(
 	input up,
 	input down,
 	input[31:0] dino_x,
-	input[31:0] dino_y);
+	input[31:0] dino_y,
+	output game_over);
 	
 	// Lab Memory Files Location
 	// localparam FILES_PATH = "/Users/smwhitt/Duke/2021/F2020/ece350/cpu/ECE350_Dino/assets/"; // FOR SAMMY waveform
@@ -93,9 +94,18 @@ module VGAController(
 	assign cacti_update = (cacti_x < 10) ? 550 : cacti_x-1;
 	// move cactus on slower clock
 	// always @(posedge screenEnd or posedge reset) begin
-	always @(posedge screenEnd) begin
-		cacti_x <= cacti_update;
+	always @(posedge screenEnd or posedge reset) begin
+		if (reset) begin
+			cacti_x <= 550;
+		end
+		else begin
+			if (~game_over)begin
+				cacti_x <= cacti_update;
+			end		
+		end
+		
 		// cacti_x <= (reset || cacti_x < 80) ? 550 : cacti_x-1;
+
 		// if (reset || cacti_x <= 80) begin
 		// 	cacti_x <= 550;
 		// end
@@ -146,10 +156,30 @@ module VGAController(
 
 	assign inSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
 	assign cactiSquare = x >= cacti_x & x < (cacti_x + 49) & y >= cacti_y & y < (cacti_y + 80);
-	assign colorData = background_data || (cactiSquare && cacti_data) ? 12'd0 : 12'hfff; // temp because cactus is still
+	assign colorData = background_data || (cactiSquare && cacti_data) ? 12'd0 : 12'hfff; 
 	assign tempColor = (inSquare && sprite_data) ? 12'd0 : colorData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
 
 	// Quickly assign the output colors to their channels using concatenation
 	assign {VGA_R, VGA_G, VGA_B} = colorOut;
+
+	// dffe_ref COLLISION(game_over, ((inSquare & sprite_data) & (cactiSquare & cacti_data)), clk, ~game_over, 1'b0); //jump works
+	dffe_ref COLLISION(game_over, ((inSquare & sprite_data) & (cactiSquare & cacti_data)), clk, ~game_over, reset); //jump doesnt work
+
 endmodule
+
+/*
+Sammi
+- dino heights
+- get score bitmaps
+- implement score rams
+- get score digit thing
+
+Cathy
+- screen shot score and game over pixels
+- animate dino run
+- detect collisions (test by using led)
+- send in game over as a input to processor and regfile to disable dino height on game over (wren = ~gameover)
+
+
+*/

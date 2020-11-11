@@ -28,6 +28,7 @@ module Wrapper(
 	input up, 
     input down);
 
+    wire game_over;
     wire rwe, mwe;
     wire[4:0] rd, rs1, rs2;
     wire[31:0] instAddr, instData, 
@@ -36,9 +37,19 @@ module Wrapper(
 
     wire screenEnd; // 60 Hz
     wire [31:0] dino_x, dino_y;
+
+    
+    wire clk25; // 25MHz clock
+
+	reg[1:0] pixCounter = 0;      // Pixel counter to divide the clock
+    assign clk25 = pixCounter[1]; // Set the clock high whenever the second bit (2) is high
+	always @(posedge clock) begin
+		pixCounter <= pixCounter + 1; // Since the reg is only 3 bits, it will reset every 8 cycles
+	end
+
     
     ///// Main Processing Unit
-    processor CPU(.clock(clock), .reset(reset), .screen_end(screenEnd),
+    processor CPU(.clock(clk25), .reset(reset), .screen_end(screenEnd),
                   
 		  ///// ROM
                   .address_imem(instAddr), .q_imem(instData),
@@ -61,7 +72,7 @@ module Wrapper(
     
     ///// Register File
     regfile RegisterFile(.clock(clock), 
-             .ctrl_writeEnable(rwe), .ctrl_reset(reset), 
+             .ctrl_writeEnable(rwe & ~game_over), .ctrl_reset(reset), 
              .ctrl_writeReg(rd),
              .ctrl_readRegA(rs1), .ctrl_readRegB(rs2), 
              .data_writeReg(rData), .data_readRegA(regA), .data_readRegB(regB), .r1(dino_x), .r2(dino_y));
@@ -70,7 +81,7 @@ module Wrapper(
     RAM ProcMem(.clk(clock), .wEn(mwe), .addr(memAddr[11:0]), .dataIn(memDataIn), .dataOut(memDataOut));
 
     ///// VGA Controller
-    VGAController vga(clock, reset, hSync, vSync, VGA_R, VGA_G, VGA_B, screenEnd, up, down, dino_x, dino_y);
+    VGAController vga(clock, reset, hSync, vSync, VGA_R, VGA_G, VGA_B, screenEnd, up, down, dino_x, dino_y, game_over);
 
     // Define counter and audio clock
     // System clock is 100 MHz system clock?
@@ -84,6 +95,8 @@ module Wrapper(
 	// 		game_clock <= ~game_clock;
 	// 	end
 	// end
+
+
 
 
 endmodule
