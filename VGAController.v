@@ -70,14 +70,20 @@ module VGAController(
 	// VGA OUTPUT
 	wire[BITS_PER_COLOR-1:0] colorOut, colorData, tempColor;
 	// SCORE
-	reg[16:0] curr_score = 0, curr_score_copy = 0;
-	reg[13:0] mod_score = 0, score4_addr = 0, score3_addr = 0, score2_addr = 0, score1_addr = 0, score0_addr = 0;
-	reg[31:0] score0_x = 605, score_y = 10;
-	reg[31:0] score4_x = 505, score3_x = 530, score2_x = 555, score1_x = 580;
-	wire scoreData, score4_data, score3_data, score2_data, score1_data, score0_data;
-	wire score4Square, score3Square, score2Square, score1Square, score0Square;
-	// DINO/SPRITES
-	wire sprite_data, inSquare;
+	reg[16:0] high_score = 0, curr_score = 0, curr_score_copy = 0; // overall scores
+	reg[13:0] mod_score = 0, curr_score4_addr = 0, curr_score3_addr = 0, curr_score2_addr = 0, curr_score1_addr = 0, curr_score0_addr = 0; // curr score bit breakdown (for RAM)
+	reg[13:0] high_score4_addr = 0, high_score3_addr = 0, high_score2_addr = 0, high_score1_addr = 0, high_score0_addr = 0; // high score bit breakdown (for RAM)
+	reg[31:0] score_y = 10; // y location for scores
+	reg[31:0] curr_score4_x = 495, curr_score3_x = 520, curr_score2_x = 545, curr_score1_x = 570, curr_score0_x = 595; // x location for curr score
+	reg[31:0] high_score4_x = 10, high_score3_x = 35, high_score2_x = 60, high_score1_x = 85, high_score0_x = 110; // x location for high score
+	wire curr_score4_data, curr_score3_data, curr_score2_data, curr_score1_data, curr_score0_data; // curr score RAM per bit
+	wire high_score4_data, high_score3_data, high_score2_data, high_score1_data, high_score0_data; // high score RAM per bit
+	wire currScore4Square, currScore3Square, currScore2Square, currScore1Square, currScore0Square; // on pixels where curr score should be
+	wire highScore4Square, highScore3Square, highScore2Square, highScore1Square, highScore0Square; // on pixels where high score should be
+	wire currScoreData, highScoreData; // display score at that part of the screen (in square and data from RAM)
+	wire new_high_score;
+	// DINO
+	wire dino_data, dinoSquare;
 	// CACTI
 	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
 	wire[31:0] cacti_update;
@@ -89,7 +95,8 @@ module VGAController(
 	wire gameover_data, gameoverSquare;
 	// OFFSETS
 	reg[12:0] offset = 0, cacti_offset = 0;
-	reg[12:0] score4_offset = 0, score3_offset = 0, score2_offset = 0, score1_offset = 0, score0_offset = 0;
+	reg[12:0] curr_score4_offset = 0, curr_score3_offset = 0, curr_score2_offset = 0, curr_score1_offset = 0, curr_score0_offset = 0;
+	reg[12:0] high_score4_offset = 0, high_score3_offset = 0, high_score2_offset = 0, high_score1_offset = 0, high_score0_offset = 0;
 	reg[13:0] gameover_offset = 0;
 	// GLOBAL GAME
 	wire game_on;
@@ -102,11 +109,11 @@ module VGAController(
 			curr_score <= 17'd0;
 			curr_score_copy <= 17'd0;
 			mod_score <= 14'd0;
-			score0_addr <= 14'd0;
-			score1_addr <= 14'd0;
-			score2_addr <= 14'd0;
-			score3_addr <= 14'd0;
-			score4_addr <= 14'd0;
+			curr_score0_addr <= 14'd0;
+			curr_score1_addr <= 14'd0;
+			curr_score2_addr <= 14'd0;
+			curr_score3_addr <= 14'd0;
+			curr_score4_addr <= 14'd0;
 		end
 		else begin
 			if (~game_over & game_on) begin 
@@ -115,12 +122,12 @@ module VGAController(
 					for (i=0; i<5; i=i+1) begin
 						mod_score = curr_score_copy%10;
 						case(i)
-							0 : score0_addr <= mod_score;
-							1 : score1_addr <= mod_score;
-							2 : score2_addr <= mod_score;
-							3 : score3_addr <= mod_score;
-							4 : score4_addr <= mod_score;
-							default : score0_addr <= mod_score;
+							0 : curr_score0_addr <= mod_score;
+							1 : curr_score1_addr <= mod_score;
+							2 : curr_score2_addr <= mod_score;
+							3 : curr_score3_addr <= mod_score;
+							4 : curr_score4_addr <= mod_score;
+							default : curr_score0_addr <= mod_score;
 						endcase
 						curr_score_copy = curr_score_copy/10;
 					end
@@ -130,39 +137,71 @@ module VGAController(
 		end
 	end
 
+	// update high score
+	always @(posedge game_over) begin
+		if (curr_score > high_score) begin
+			high_score <= curr_score;
+			high_score0_addr <= curr_score0_addr;
+			high_score1_addr <= curr_score1_addr;
+			high_score2_addr <= curr_score2_addr;
+			high_score3_addr <= curr_score3_addr;
+			high_score4_addr <= curr_score4_addr;
+		end
+	end
+
 	// update image offset
 	always @(posedge clk25 or posedge reset) begin
 		if (reset | screenEnd) begin
 			offset <= 13'd0;
 			cacti_offset <= 13'd0;
-			score0_offset <= 13'd0;
-			score1_offset <= 13'd0;
-			score2_offset <= 13'd0;
-			score3_offset <= 13'd0;
-			score4_offset <= 13'd0;
+			curr_score0_offset <= 13'd0;
+			curr_score1_offset <= 13'd0;
+			curr_score2_offset <= 13'd0;
+			curr_score3_offset <= 13'd0;
+			curr_score4_offset <= 13'd0;
+			high_score0_offset <= 13'd0;
+			high_score1_offset <= 13'd0;
+			high_score2_offset <= 13'd0;
+			high_score3_offset <= 13'd0;
+			high_score4_offset <= 13'd0;
 			gameover_offset <= 14'd0;
 		end
 		else begin
-			if (inSquare) begin
+			if (dinoSquare) begin
 				offset <= offset+1;
 			end
 			if (cactiSquare) begin
 				cacti_offset <= cacti_offset+1;
 			end
-			if (score0Square) begin
-				score0_offset <= score0_offset+1;
+			if (currScore0Square) begin
+				curr_score0_offset <= curr_score0_offset+1;
 			end
-			if (score1Square) begin
-				score1_offset <= score1_offset+1;
+			if (currScore1Square) begin
+				curr_score1_offset <= curr_score1_offset+1;
 			end
-			if (score2Square) begin
-				score2_offset <= score2_offset+1;
+			if (currScore2Square) begin
+				curr_score2_offset <= curr_score2_offset+1;
 			end
-			if (score3Square) begin
-				score3_offset <= score3_offset+1;
+			if (currScore3Square) begin
+				curr_score3_offset <= curr_score3_offset+1;
 			end
-			if (score4Square) begin
-				score4_offset <= score4_offset+1;
+			if (currScore4Square) begin
+				curr_score4_offset <= curr_score4_offset+1;
+			end
+			if (highScore0Square) begin
+				high_score0_offset <= high_score0_offset+1;
+			end
+			if (highScore1Square) begin
+				high_score1_offset <= high_score1_offset+1;
+			end
+			if (highScore2Square) begin
+				high_score2_offset <= high_score2_offset+1;
+			end
+			if (highScore3Square) begin
+				high_score3_offset <= high_score3_offset+1;
+			end
+			if (highScore4Square) begin
+				high_score4_offset <= high_score4_offset+1;
 			end
 			if (gameoverSquare) begin
 				gameover_offset <= gameover_offset+1;
@@ -187,18 +226,19 @@ module VGAController(
 	end
 
 	/************ RAM FILES ************/
-	// dino
+	// DINO
 	RAM #(
 		.DEPTH(60*60*3), 		       // sprite mem file size		
 		.DATA_WIDTH(1), 		       // either 1 or 0
 		.ADDRESS_WIDTH(13),     // Set address width according to the color count
 		.MEMFILE({FILES_PATH, "dino.mem"}))  // Memory initialization
-	SpritesData(
+	DinoData(
 		.clk(clk), 							   	   // Rising edge of the 100 MHz clk
 		.addr(13'd0 + offset),					       // Address from the ImageData RAM
-		.dataOut(sprite_data),				       // 1 or 0 at current address
+		.dataOut(dino_data),				       // 1 or 0 at current address
 		.wEn(1'b0)); 						       // We're always reading
-	// cacti
+	
+	// CACTI
 	RAM #(
 		.DEPTH(49*80),
 		.DATA_WIDTH(1),
@@ -209,7 +249,8 @@ module VGAController(
 		.addr(13'd0 + cacti_offset),
 		.dataOut(cacti_data),
 		.wEn(1'b0));
-	// background
+
+	// BACKGROUND
 	RAM #(
 		.DEPTH(PIXEL_COUNT),
 		.DATA_WIDTH(1),
@@ -220,16 +261,18 @@ module VGAController(
 		.addr(imgAddress),
 		.dataOut(background_data),
 		.wEn(1'b0));
+	
+	// CURR SCORE
 	// score[4]
 	RAM #(
 		.DEPTH(25*25*10),
 		.DATA_WIDTH(1),
 		.ADDRESS_WIDTH(14),
 		.MEMFILE({FILES_PATH, "num.mem"}))
-	Score4Data(
+	CurrScore4Data(
 		.clk(clk),
-		.addr(score4_addr*25*25 + score4_offset),
-		.dataOut(score4_data),
+		.addr(curr_score4_addr*25*25 + curr_score4_offset),
+		.dataOut(curr_score4_data),
 		.wEn(1'b0));
 	// score[3]
 	RAM #(
@@ -237,10 +280,10 @@ module VGAController(
 		.DATA_WIDTH(1),
 		.ADDRESS_WIDTH(14),
 		.MEMFILE({FILES_PATH, "num.mem"}))
-	Score3Data(
+	CurrScore3Data(
 		.clk(clk),
-		.addr(score3_addr*25*25 + score3_offset),
-		.dataOut(score3_data),
+		.addr(curr_score3_addr*25*25 + curr_score3_offset),
+		.dataOut(curr_score3_data),
 		.wEn(1'b0));
 	// score[2]
 	RAM #(
@@ -248,10 +291,10 @@ module VGAController(
 		.DATA_WIDTH(1),
 		.ADDRESS_WIDTH(14),
 		.MEMFILE({FILES_PATH, "num.mem"}))
-	Score2Data(
+	CurrScore2Data(
 		.clk(clk),
-		.addr(score2_addr*25*25 + score2_offset),
-		.dataOut(score2_data),
+		.addr(curr_score2_addr*25*25 + curr_score2_offset),
+		.dataOut(curr_score2_data),
 		.wEn(1'b0));
 	// score[1]
 	RAM #(
@@ -259,10 +302,10 @@ module VGAController(
 		.DATA_WIDTH(1),
 		.ADDRESS_WIDTH(14),
 		.MEMFILE({FILES_PATH, "num.mem"}))
-	Score1Data(
+	CurrScore1Data(
 		.clk(clk),
-		.addr(score1_addr*25*25 + score1_offset),
-		.dataOut(score1_data),
+		.addr(curr_score1_addr*25*25 + curr_score1_offset),
+		.dataOut(curr_score1_data),
 		.wEn(1'b0));
 	// score[0]
 	RAM #(
@@ -270,12 +313,70 @@ module VGAController(
 		.DATA_WIDTH(1),
 		.ADDRESS_WIDTH(14),
 		.MEMFILE({FILES_PATH, "num.mem"}))
-	Score0Data(
+	CurrScore0Data(
 		.clk(clk),
-		.addr(score0_addr*25*25 + score0_offset),
-		.dataOut(score0_data),
+		.addr(curr_score0_addr*25*25 + curr_score0_offset),
+		.dataOut(curr_score0_data),
 		.wEn(1'b0));
-	// game over
+
+	// HIGH SCORE
+	// score[4]
+	RAM #(
+		.DEPTH(25*25*10),
+		.DATA_WIDTH(1),
+		.ADDRESS_WIDTH(14),
+		.MEMFILE({FILES_PATH, "num.mem"}))
+	HighScore4Data(
+		.clk(clk),
+		.addr(high_score4_addr*25*25 + high_score4_offset),
+		.dataOut(high_score4_data),
+		.wEn(1'b0));
+	// score[3]
+	RAM #(
+		.DEPTH(25*25*10),
+		.DATA_WIDTH(1),
+		.ADDRESS_WIDTH(14),
+		.MEMFILE({FILES_PATH, "num.mem"}))
+	HighScore3Data(
+		.clk(clk),
+		.addr(high_score3_addr*25*25 + high_score3_offset),
+		.dataOut(high_score3_data),
+		.wEn(1'b0));
+	// score[2]
+	RAM #(
+		.DEPTH(25*25*10),
+		.DATA_WIDTH(1),
+		.ADDRESS_WIDTH(14),
+		.MEMFILE({FILES_PATH, "num.mem"}))
+	HighScore2Data(
+		.clk(clk),
+		.addr(high_score2_addr*25*25 + high_score2_offset),
+		.dataOut(high_score2_data),
+		.wEn(1'b0));
+	// score[1]
+	RAM #(
+		.DEPTH(25*25*10),
+		.DATA_WIDTH(1),
+		.ADDRESS_WIDTH(14),
+		.MEMFILE({FILES_PATH, "num.mem"}))
+	HighScore1Data(
+		.clk(clk),
+		.addr(high_score1_addr*25*25 + high_score1_offset),
+		.dataOut(high_score1_data),
+		.wEn(1'b0));
+	// score[0]
+	RAM #(
+		.DEPTH(25*25*10),
+		.DATA_WIDTH(1),
+		.ADDRESS_WIDTH(14),
+		.MEMFILE({FILES_PATH, "num.mem"}))
+	HighScore0Data(
+		.clk(clk),
+		.addr(high_score0_addr*25*25 + high_score0_offset),
+		.dataOut(high_score0_data),
+		.wEn(1'b0));
+
+	// GAME OVER
 	RAM #(
 		.DEPTH(30*370),
 		.DATA_WIDTH(1),
@@ -288,18 +389,24 @@ module VGAController(
 		.wEn(1'b0));
 
 	/************ VGA OUTPUT CODE ************/
-	assign inSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
+	assign dinoSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
 	assign cactiSquare = x >= cacti_x & x < (cacti_x + 49) & y >= cacti_y & y < (cacti_y + 80);
-	assign score0Square = x >= score0_x & x < (score0_x + 25) & y >= score_y & y < (score_y + 25);
-	assign score1Square = x >= score1_x & x < (score1_x + 25) & y >= score_y & y < (score_y + 25);
-	assign score2Square = x >= score2_x & x < (score2_x + 25) & y >= score_y & y < (score_y + 25);
-	assign score3Square = x >= score3_x & x < (score3_x + 25) & y >= score_y & y < (score_y + 25);
-	assign score4Square = x >= score4_x & x < (score4_x + 25) & y >= score_y & y < (score_y + 25);
+	assign currScore0Square = x >= curr_score0_x & x < (curr_score0_x + 25) & y >= score_y & y < (score_y + 25);
+	assign currScore1Square = x >= curr_score1_x & x < (curr_score1_x + 25) & y >= score_y & y < (score_y + 25);
+	assign currScore2Square = x >= curr_score2_x & x < (curr_score2_x + 25) & y >= score_y & y < (score_y + 25);
+	assign currScore3Square = x >= curr_score3_x & x < (curr_score3_x + 25) & y >= score_y & y < (score_y + 25);
+	assign currScore4Square = x >= curr_score4_x & x < (curr_score4_x + 25) & y >= score_y & y < (score_y + 25);
+	assign highScore0Square = x >= high_score0_x & x < (high_score0_x + 25) & y >= score_y & y < (score_y + 25);
+	assign highScore1Square = x >= high_score1_x & x < (high_score1_x + 25) & y >= score_y & y < (score_y + 25);
+	assign highScore2Square = x >= high_score2_x & x < (high_score2_x + 25) & y >= score_y & y < (score_y + 25);
+	assign highScore3Square = x >= high_score3_x & x < (high_score3_x + 25) & y >= score_y & y < (score_y + 25);
+	assign highScore4Square = x >= high_score4_x & x < (high_score4_x + 25) & y >= score_y & y < (score_y + 25);
 	assign gameoverSquare = game_over & (x >= gameover_x & x < (gameover_x + 370) & y >= gameover_y & y < (gameover_y + 30));
 
-	assign scoreData = (score0Square & score0_data) | (score1Square & score1_data) | (score2Square & score2_data) | (score3Square & score3_data) | (score4Square & score4_data);
+	assign currScoreData = (currScore0Square & curr_score0_data) | (currScore1Square & curr_score1_data) | (currScore2Square & curr_score2_data) | (currScore3Square & curr_score3_data) | (currScore4Square & curr_score4_data);
+	assign highScoreData = (highScore0Square & high_score0_data) | (highScore1Square & high_score1_data) | (highScore2Square & high_score2_data) | (highScore3Square & high_score3_data) | (highScore4Square & high_score4_data);
 	assign colorData = background_data ? 12'd0 : 12'hfff;
-	assign tempColor = (inSquare & sprite_data) | (cactiSquare & cacti_data) | scoreData | (gameoverSquare & gameover_data) ? 12'd0 : colorData;
+	assign tempColor = (dinoSquare & dino_data) | (cactiSquare & cacti_data) | currScoreData | highScoreData | (gameoverSquare & gameover_data) ? 12'd0 : colorData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
 
 	// Quickly assign the output colors to their channels using concatenation
@@ -307,6 +414,6 @@ module VGAController(
 
 	/************ START AND END GAME ************/
 	dffe_ref STARTGAME(game_on, up, clk, ~game_on, reset);
-	dffe_ref COLLISION(game_over, ((inSquare & sprite_data) & (cactiSquare & cacti_data)), clk, ~game_over, reset);
+	dffe_ref COLLISION(game_over, ((dinoSquare & dino_data) & (cactiSquare & cacti_data)), clk, ~game_over, reset);
 
 endmodule
