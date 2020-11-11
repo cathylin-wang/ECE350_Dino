@@ -16,8 +16,8 @@ module VGAController(
 	
 	// Lab Memory Files Location
 	// localparam FILES_PATH = "/Users/smwhitt/Duke/2021/F2020/ece350/cpu/ECE350_Dino/assets/"; // FOR SAMMY waveform
-	localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
-	// localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
+	// localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
+	localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
 
 	wire game_on;
 	dffe_ref STARTGAME(game_on, up, clk, ~game_on, reset); //jump doesnt work
@@ -78,7 +78,7 @@ module VGAController(
 	reg[12:0] offset = 0;
 	reg[12:0] cacti_offset = 0;
 
-	reg[31:0] cacti_x = VIDEO_WIDTH-BORDER-CACTI_WIDTH, cacti_y = GROUND-CACTI_HEIGHT;
+	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
 	wire[31:0] cacti_update;
 	wire inSquare, cactiSquare;
 
