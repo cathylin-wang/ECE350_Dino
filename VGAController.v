@@ -78,7 +78,7 @@ module VGAController(
 	reg[12:0] offset = 0;
 	reg[12:0] cacti_offset = 0;
 
-	reg[31:0] cacti_x = 550, cacti_y = GROUND-70;
+	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
 	wire[31:0] cacti_update;
 	wire inSquare, cactiSquare;
 
@@ -127,7 +127,7 @@ module VGAController(
 
 	// cacti
 	RAM #(
-		.DEPTH(42*70), 		       // sprite mem file size		
+		.DEPTH(49*80), 		       // sprite mem file size		
 		.DATA_WIDTH(1), 		       // either 1 or 0
 		.ADDRESS_WIDTH(13),     // Set address width according to the color count
 		.MEMFILE({FILES_PATH, "cacti.mem"}))  // Memory initialization
@@ -154,7 +154,7 @@ module VGAController(
 	wire[BITS_PER_COLOR-1:0] colorOut; 			  // Output color 
 
 	assign inSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
-	assign cactiSquare = x >= cacti_x & x < (cacti_x + 42) & y >= cacti_y & y < (cacti_y + 70);
+	assign cactiSquare = x >= cacti_x & x < (cacti_x + 49) & y >= cacti_y & y < (cacti_y + 80);
 	assign colorData = background_data || (cactiSquare && cacti_data) ? 12'd0 : 12'hfff; 
 	assign tempColor = (inSquare && sprite_data) ? 12'd0 : colorData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
