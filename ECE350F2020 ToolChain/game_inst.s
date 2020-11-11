@@ -16,7 +16,19 @@ buttonPress:
   wait
   wait
   wait
-  addi $r2, $r2, -40
+  addi $r2, $r2, -70 
+  wait
+  wait
+  wait
+  wait
+  wait
+  addi $r2, $r2, -45
+  wait
+  wait
+  wait
+  wait
+  wait
+  addi $r2, $r2, -30
   wait
   wait
   wait
@@ -58,7 +70,19 @@ buttonPress:
   wait
   wait
   wait
-  addi $r2, $r2, 40
+  addi $r2, $r2, 30
+  wait
+  wait
+  wait
+  wait
+  wait
+  addi $r2, $r2, 45
+  wait
+  wait
+  wait
+  wait
+  wait
+  addi $r2, $r2, 70
   wait
   wait
   j io_loop
