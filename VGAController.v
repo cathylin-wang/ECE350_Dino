@@ -16,8 +16,8 @@ module VGAController(
 	
 	// Lab Memory Files Location
 	// localparam FILES_PATH = "/Users/smwhitt/Duke/2021/F2020/ece350/cpu/ECE350_Dino/assets/"; // FOR SAMMY waveform
-	// localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
-	localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
+	localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
+	// localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
 
 	// Clock divider 100 MHz -> 25 MHz
 	wire clk25; // 25MHz clock
@@ -61,10 +61,15 @@ module VGAController(
 		BITS_PER_COLOR = 12, 	  								 // Nexys A7 uses 12 bits/color
 		PALETTE_COLOR_COUNT = 256, 								 // Number of Colors available
 		PALETTE_ADDRESS_WIDTH = $clog2(PALETTE_COLOR_COUNT) + 1,
-		GROUND = 335; // Use built in log2 Command
+		GROUND = 335,
+		DINO_HANDW = 60,
+		CACTI_HEIGHT = 70,
+		CACTI_WIDTH = 42,
+		SCORE_HANDW = 14'd35,
+		BORDER = 10;
 
 	wire[PIXEL_ADDRESS_WIDTH-1:0] imgAddress;  	 // Image address for the image data
-	assign imgAddress = x + 640*y;				 // Address calculated coordinate
+	assign imgAddress = x + VIDEO_WIDTH*y;				 // Address calculated coordinate
 
 	// Color Palette to Map Color Address to 12-Bit Color
 	wire[BITS_PER_COLOR-1:0] colorData, tempColor; // 12-bit color data at current pixel
@@ -75,7 +80,7 @@ module VGAController(
 	reg[12:0] offset = 0;
 	reg[12:0] cacti_offset = 0;
 
-	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
+	reg[31:0] cacti_x = VIDEO_WIDTH-BORDER-CACTI_WIDTH, cacti_y = GROUND-CACTI_HEIGHT;
 	wire[31:0] cacti_update;
 	wire inSquare, cactiSquare;
 
@@ -163,19 +168,3 @@ module VGAController(
 	dffe_ref COLLISION(game_over, ((inSquare & sprite_data) & (cactiSquare & cacti_data)), clk, ~game_over, reset); //jump doesnt work
 
 endmodule
-
-/*
-Sammi
-- dino heights
-- get score bitmaps
-- implement score rams
-- get score digit thing
-
-Cathy
-- screen shot score and game over pixels
-- animate dino run
-- detect collisions (test by using led)
-- send in game over as a input to processor and regfile to disable dino height on game over (wren = ~gameover)
-
-
-*/
