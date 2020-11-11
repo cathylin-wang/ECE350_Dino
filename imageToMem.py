@@ -4,26 +4,23 @@ from PIL import Image
 def decode():
   image = Image.open(sys.argv[1])
 
-  # size = 60
+  # size = 25
   # image = image.resize((size, size))
-  # image = image.resize((640, 480))
-  image = image.resize((49, 80))
+  image = image.resize((370, 30)) # width, height
   pixels = image.load()
   # res = [0] * size
-  # res = [0] * 480
-  res = [0] * 80
+  res = [0] * 30
   # for row in range(size):
-  # for row in range(480):
-  for row in range(80):
+  for row in range(30):
     # res[row] = [0] * size
-    # res[row] = [0] * 640
-    res[row] = [0] * 49
+    res[row] = [0] * 370
 
   for x in range(image.height):
     for y in range(image.width):
-      r,g,b = pixels[y,x]
-      # r,g,b,a = pixels[y, x]
-      val = 1 if r < 200 and r > 0 else 0
+      # r,g,b = pixels[y,x]
+      r,g,b,a = pixels[y, x]
+      # print(r,g,b, " ")
+      val = 1 if r < 100 and r > 0 else 0
       # val = 1 if r > 1 else 0
       res[x][y] = str(val)
 
