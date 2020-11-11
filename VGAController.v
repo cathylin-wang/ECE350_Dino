@@ -73,14 +73,14 @@ module VGAController(
 	reg[16:0] high_score = 0, curr_score = 0, curr_score_copy = 0; // overall scores
 	reg[13:0] mod_score = 0, curr_score4_addr = 0, curr_score3_addr = 0, curr_score2_addr = 0, curr_score1_addr = 0, curr_score0_addr = 0; // curr score bit breakdown (for RAM)
 	reg[13:0] high_score4_addr = 0, high_score3_addr = 0, high_score2_addr = 0, high_score1_addr = 0, high_score0_addr = 0; // high score bit breakdown (for RAM)
-	reg[31:0] score_y = 10; // y location for scores
+	reg[31:0] score_y = 10; // y location for scores AND hi
 	reg[31:0] curr_score4_x = 495, curr_score3_x = 520, curr_score2_x = 545, curr_score1_x = 570, curr_score0_x = 595; // x location for curr score
-	reg[31:0] high_score4_x = 10, high_score3_x = 35, high_score2_x = 60, high_score1_x = 85, high_score0_x = 110; // x location for high score
+	reg[31:0] high_score4_x = 57, high_score3_x = 82, high_score2_x = 107, high_score1_x = 132, high_score0_x = 157; // x location for high score
 	wire curr_score4_data, curr_score3_data, curr_score2_data, curr_score1_data, curr_score0_data; // curr score RAM per bit
 	wire high_score4_data, high_score3_data, high_score2_data, high_score1_data, high_score0_data; // high score RAM per bit
 	wire currScore4Square, currScore3Square, currScore2Square, currScore1Square, currScore0Square; // on pixels where curr score should be
 	wire highScore4Square, highScore3Square, highScore2Square, highScore1Square, highScore0Square; // on pixels where high score should be
-	wire currScoreData, highScoreData; // display score at that part of the screen (in square and data from RAM)
+	wire currScoreData, highScoreData, scoreData; // display score at that part of the screen (in square and data from RAM)
 	wire new_high_score;
 	// DINO
 	wire dino_data, dinoSquare;
@@ -93,11 +93,15 @@ module VGAController(
 	// GAME OVER (SCREEN)
 	reg[31:0] gameover_x = 135, gameover_y = 152;
 	wire gameover_data, gameoverSquare;
+	// HIGH SCORE (SCREEN)
+	reg[31:0] hi_x = 10;
+	wire hi_data, hiSquare;
 	// OFFSETS
 	reg[12:0] offset = 0, cacti_offset = 0;
 	reg[12:0] curr_score4_offset = 0, curr_score3_offset = 0, curr_score2_offset = 0, curr_score1_offset = 0, curr_score0_offset = 0;
 	reg[12:0] high_score4_offset = 0, high_score3_offset = 0, high_score2_offset = 0, high_score1_offset = 0, high_score0_offset = 0;
 	reg[13:0] gameover_offset = 0;
+	reg[10:0] hi_offset = 0;
 	// GLOBAL GAME
 	wire game_on;
 
@@ -165,6 +169,7 @@ module VGAController(
 			high_score3_offset <= 13'd0;
 			high_score4_offset <= 13'd0;
 			gameover_offset <= 14'd0;
+			hi_offset <= 11'd0;
 		end
 		else begin
 			if (dinoSquare) begin
@@ -205,6 +210,9 @@ module VGAController(
 			end
 			if (gameoverSquare) begin
 				gameover_offset <= gameover_offset+1;
+			end
+			if (hiSquare) begin
+				hi_offset <= hi_offset+1;
 			end
 		end
 	end
@@ -388,6 +396,18 @@ module VGAController(
 		.dataOut(gameover_data),
 		.wEn(1'b0));
 
+	// HI
+	RAM #(
+		.DEPTH(25*47),
+		.DATA_WIDTH(1),
+		.ADDRESS_WIDTH(11),
+		.MEMFILE({FILES_PATH, "hi.mem"}))
+	HiData(
+		.clk(clk),
+		.addr(11'd0 + hi_offset),
+		.dataOut(hi_data),
+		.wEn(1'b0));
+
 	/************ VGA OUTPUT CODE ************/
 	assign dinoSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
 	assign cactiSquare = x >= cacti_x & x < (cacti_x + 49) & y >= cacti_y & y < (cacti_y + 80);
@@ -402,11 +422,13 @@ module VGAController(
 	assign highScore3Square = x >= high_score3_x & x < (high_score3_x + 25) & y >= score_y & y < (score_y + 25);
 	assign highScore4Square = x >= high_score4_x & x < (high_score4_x + 25) & y >= score_y & y < (score_y + 25);
 	assign gameoverSquare = game_over & (x >= gameover_x & x < (gameover_x + 370) & y >= gameover_y & y < (gameover_y + 30));
+	assign hiSquare = x >= hi_x & x < (hi_x + 47) & y >= score_y & y < (score_y + 25);
 
 	assign currScoreData = (currScore0Square & curr_score0_data) | (currScore1Square & curr_score1_data) | (currScore2Square & curr_score2_data) | (currScore3Square & curr_score3_data) | (currScore4Square & curr_score4_data);
 	assign highScoreData = (highScore0Square & high_score0_data) | (highScore1Square & high_score1_data) | (highScore2Square & high_score2_data) | (highScore3Square & high_score3_data) | (highScore4Square & high_score4_data);
+	assign scoreData = currScoreData | highScoreData | (hiSquare & hi_data);
 	assign colorData = background_data ? 12'd0 : 12'hfff;
-	assign tempColor = (dinoSquare & dino_data) | (cactiSquare & cacti_data) | currScoreData | highScoreData | (gameoverSquare & gameover_data) ? 12'd0 : colorData;
+	assign tempColor = (dinoSquare & dino_data) | (cactiSquare & cacti_data) | (gameoverSquare & gameover_data) | scoreData ? 12'd0 : colorData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
 
 	// Quickly assign the output colors to their channels using concatenation
