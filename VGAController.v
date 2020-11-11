@@ -19,6 +19,9 @@ module VGAController(
 	localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
 	// localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
 
+	wire game_on;
+	dffe_ref STARTGAME(game_on, up, clk, ~game_on, reset); //jump doesnt work
+
 	// Clock divider 100 MHz -> 25 MHz
 	wire clk25; // 25MHz clock
 	wire scoreClock;
@@ -60,13 +63,8 @@ module VGAController(
 		PIXEL_ADDRESS_WIDTH = $clog2(PIXEL_COUNT) + 1,           // Use built in log2 command
 		BITS_PER_COLOR = 12, 	  								 // Nexys A7 uses 12 bits/color
 		PALETTE_COLOR_COUNT = 256, 								 // Number of Colors available
-		PALETTE_ADDRESS_WIDTH = $clog2(PALETTE_COLOR_COUNT) + 1,
-		GROUND = 335,
-		DINO_HANDW = 60,
-		CACTI_HEIGHT = 70,
-		CACTI_WIDTH = 42,
-		SCORE_HANDW = 14'd35,
-		BORDER = 10;
+		PALETTE_ADDRESS_WIDTH = $clog2(PALETTE_COLOR_COUNT) + 1, // Use built in log2 Command
+		GROUND = 335; 
 
 	wire[PIXEL_ADDRESS_WIDTH-1:0] imgAddress;  	 // Image address for the image data
 	assign imgAddress = x + VIDEO_WIDTH*y;				 // Address calculated coordinate
@@ -108,7 +106,7 @@ module VGAController(
 			cacti_x <= 550;
 		end
 		else begin
-			if (~game_over)begin
+			if (~game_over & game_on)begin
 				cacti_x <= cacti_update;
 			end		
 		end
