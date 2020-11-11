@@ -11,13 +11,22 @@ module VGAController(
 	input up,
 	input down,
 	input[31:0] dino_x,
+<<<<<<< HEAD
 	input[31:0] dino_y,
 	output game_over);
+=======
+	input[31:0] dino_y);
+	// output[3:0] score_0,
+	// output[3:0] score_1,
+	// output[3:0] score_2,
+	// output[3:0] score_3,
+	// output[3:0] score_4);
+>>>>>>> eceb9fd29985e53d9c9a3d0841ccfadf9f6ea306
 	
 	// Lab Memory Files Location
-	// localparam FILES_PATH = "/Users/smwhitt/Duke/2021/F2020/ece350/cpu/ECE350_Dino/assets/"; // FOR SAMMY waveform
+	localparam FILES_PATH = "/Users/smwhitt/Duke/2021/F2020/ece350/cpu/ECE350_Dino/assets/"; // FOR SAMMY waveform
 	// localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
-	localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
+	// localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
 
 	// Clock divider 100 MHz -> 25 MHz
 	wire clk25; // 25MHz clock
@@ -65,13 +74,35 @@ module VGAController(
 	// Color Palette to Map Color Address to 12-Bit Color
 	wire[BITS_PER_COLOR-1:0] colorData, tempColor; // 12-bit color data at current pixel
 
+	// // SCORE
+	// reg[16:0] curr_score = 0;
+	// reg[16:0] curr_score_copy = 0;
+	// reg[3:0] mod_score = 0;
+
+	// always @(posedge screenEnd) begin
+	// 	if (curr_score <= 99999) begin
+	// 		curr_score_copy <= curr_score;
+	// 		for (i=0; i<5; i=i+1) begin
+	// 			mod_score = curr_score_copy%10;
+	// 			case(i)
+	// 				0 : score_0 <= mod_score;
+	// 				1 : score_1 <= mod_score;
+	// 				2 : score_2 <= mod_score;
+	// 				3 : score_3 <= mod_score;
+	// 				4 : score_4 <= mod_score;
+	// 			endcase
+	// 			curr_score_copy = curr_score_copy/10;
+	// 		end
+	// 	end
+	// end	
+
 	// SPRITES CODE
 	wire sprite_data, cacti_data, background_data;
 
 	reg[12:0] offset = 0;
 	reg[12:0] cacti_offset = 0;
 
-	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
+	reg[31:0] cacti_x = 550, cacti_y = GROUND-70;
 	wire[31:0] cacti_update;
 	wire inSquare, cactiSquare;
 
@@ -93,6 +124,7 @@ module VGAController(
 	
 	assign cacti_update = (cacti_x < 10) ? 550 : cacti_x-1;
 	// move cactus on slower clock
+<<<<<<< HEAD
 	always @(posedge screenEnd or posedge reset) begin
 		if (reset) begin
 			cacti_x <= 550;
@@ -103,6 +135,18 @@ module VGAController(
 			end		
 		end
 		
+=======
+	// always @(posedge screenEnd or posedge reset) begin
+	always @(posedge screenEnd) begin
+		cacti_x <= cacti_update;
+		// cacti_x <= (reset || cacti_x < 70) ? 550 : cacti_x-1;
+		// if (reset || cacti_x <= 70) begin
+		// 	cacti_x <= 550;
+		// end
+		// else begin
+		// 	cacti_x <= cacti_x-1;
+		// end
+>>>>>>> eceb9fd29985e53d9c9a3d0841ccfadf9f6ea306
 	end
 
 	// dino
@@ -119,7 +163,7 @@ module VGAController(
 
 	// cacti
 	RAM #(
-		.DEPTH(49*80), 		       // sprite mem file size		
+		.DEPTH(42*70), 		       // sprite mem file size		
 		.DATA_WIDTH(1), 		       // either 1 or 0
 		.ADDRESS_WIDTH(13),     // Set address width according to the color count
 		.MEMFILE({FILES_PATH, "cacti.mem"}))  // Memory initialization
@@ -146,8 +190,13 @@ module VGAController(
 	wire[BITS_PER_COLOR-1:0] colorOut; 			  // Output color 
 
 	assign inSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
+<<<<<<< HEAD
 	assign cactiSquare = x >= cacti_x & x < (cacti_x + 49) & y >= cacti_y & y < (cacti_y + 80);
 	assign colorData = background_data || (cactiSquare && cacti_data) ? 12'd0 : 12'hfff; 
+=======
+	assign cactiSquare = x >= cacti_x & x < (cacti_x + 42) & y >= cacti_y & y < (cacti_y + 70);
+	assign colorData = background_data || (cactiSquare && cacti_data) ? 12'd0 : 12'hfff; // temp because cactus is still
+>>>>>>> eceb9fd29985e53d9c9a3d0841ccfadf9f6ea306
 	assign tempColor = (inSquare && sprite_data) ? 12'd0 : colorData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
 

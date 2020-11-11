@@ -1,5 +1,5 @@
 // Define 1 ns as the delay time unit and 100 ps of precision in the waveform
-`timescale 1 ns / 100 ps
+`timescale 1 ns / 1 ns
 module Wrapper_tb;
     reg clk, reset, up;
 
@@ -18,7 +18,7 @@ module Wrapper_tb;
         #1 reset = 0;
 
         // time delay (ns)
-        #1000
+        #10000000
         
         //end testbrach
         $finish;
@@ -29,6 +29,9 @@ module Wrapper_tb;
         #1 clk = ~clk;
     always
         #5 up = ~up;
+
+    always
+        #10000 $display("Progress: %0d\%", $time/100000);
 
     // Define output waveform properties
     initial begin
