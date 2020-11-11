@@ -11,17 +11,13 @@ module VGAController(
 	input up,
 	input down,
 	input[31:0] dino_x,
-<<<<<<< HEAD
 	input[31:0] dino_y,
 	output game_over);
-=======
-	input[31:0] dino_y);
 	// output[3:0] score_0,
 	// output[3:0] score_1,
 	// output[3:0] score_2,
 	// output[3:0] score_3,
 	// output[3:0] score_4);
->>>>>>> eceb9fd29985e53d9c9a3d0841ccfadf9f6ea306
 	
 	// Lab Memory Files Location
 	localparam FILES_PATH = "/Users/smwhitt/Duke/2021/F2020/ece350/cpu/ECE350_Dino/assets/"; // FOR SAMMY waveform
@@ -124,7 +120,6 @@ module VGAController(
 	
 	assign cacti_update = (cacti_x < 10) ? 550 : cacti_x-1;
 	// move cactus on slower clock
-<<<<<<< HEAD
 	always @(posedge screenEnd or posedge reset) begin
 		if (reset) begin
 			cacti_x <= 550;
@@ -135,18 +130,6 @@ module VGAController(
 			end		
 		end
 		
-=======
-	// always @(posedge screenEnd or posedge reset) begin
-	always @(posedge screenEnd) begin
-		cacti_x <= cacti_update;
-		// cacti_x <= (reset || cacti_x < 70) ? 550 : cacti_x-1;
-		// if (reset || cacti_x <= 70) begin
-		// 	cacti_x <= 550;
-		// end
-		// else begin
-		// 	cacti_x <= cacti_x-1;
-		// end
->>>>>>> eceb9fd29985e53d9c9a3d0841ccfadf9f6ea306
 	end
 
 	// dino
@@ -190,13 +173,8 @@ module VGAController(
 	wire[BITS_PER_COLOR-1:0] colorOut; 			  // Output color 
 
 	assign inSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
-<<<<<<< HEAD
-	assign cactiSquare = x >= cacti_x & x < (cacti_x + 49) & y >= cacti_y & y < (cacti_y + 80);
-	assign colorData = background_data || (cactiSquare && cacti_data) ? 12'd0 : 12'hfff; 
-=======
 	assign cactiSquare = x >= cacti_x & x < (cacti_x + 42) & y >= cacti_y & y < (cacti_y + 70);
 	assign colorData = background_data || (cactiSquare && cacti_data) ? 12'd0 : 12'hfff; // temp because cactus is still
->>>>>>> eceb9fd29985e53d9c9a3d0841ccfadf9f6ea306
 	assign tempColor = (inSquare && sprite_data) ? 12'd0 : colorData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
 
