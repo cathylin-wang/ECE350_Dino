@@ -93,7 +93,6 @@ module VGAController(
 	
 	assign cacti_update = (cacti_x < 10) ? 550 : cacti_x-1;
 	// move cactus on slower clock
-	// always @(posedge screenEnd or posedge reset) begin
 	always @(posedge screenEnd or posedge reset) begin
 		if (reset) begin
 			cacti_x <= 550;
@@ -104,14 +103,6 @@ module VGAController(
 			end		
 		end
 		
-		// cacti_x <= (reset || cacti_x < 80) ? 550 : cacti_x-1;
-
-		// if (reset || cacti_x <= 80) begin
-		// 	cacti_x <= 550;
-		// end
-		// else begin
-		// 	cacti_x <= cacti_x-1;
-		// end
 	end
 
 	// dino
