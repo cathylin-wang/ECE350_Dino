@@ -21,12 +21,16 @@ module VGAController(
 
 	// Clock divider 100 MHz -> 25 MHz
 	wire clk25; // 25MHz clock
+	wire scoreClock;
 
 	reg[1:0] pixCounter = 0;      // Pixel counter to divide the clock
     assign clk25 = pixCounter[1]; // Set the clock high whenever the second bit (2) is high
 	always @(posedge clk) begin
 		pixCounter <= pixCounter + 1; // Since the reg is only 3 bits, it will reset every 8 cycles
 	end
+
+	reg[4:0] screenEndDivider = 0;
+	assign scoreClock = &screenEndDivider;
 
 	// VGA Timing Generation for a Standard VGA Screen
 	localparam 
@@ -94,6 +98,7 @@ module VGAController(
 	assign cacti_update = (cacti_x < 10) ? 550 : cacti_x-1;
 	// move cactus on slower clock
 	always @(posedge screenEnd or posedge reset) begin
+		screenEndDivider <= screenEndDivider + 1; // screen divider clock
 		if (reset) begin
 			cacti_x <= 550;
 		end
