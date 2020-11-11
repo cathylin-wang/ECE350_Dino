@@ -67,7 +67,7 @@ module VGAController(
 		GROUND = 335; 
 
 	wire[PIXEL_ADDRESS_WIDTH-1:0] imgAddress;  	 // Image address for the image data
-	assign imgAddress = x + VIDEO_WIDTH*y;				 // Address calculated coordinate
+	assign imgAddress = x + 640*y;				 // Address calculated coordinate
 
 	// Color Palette to Map Color Address to 12-Bit Color
 	wire[BITS_PER_COLOR-1:0] colorData, tempColor; // 12-bit color data at current pixel
@@ -78,7 +78,7 @@ module VGAController(
 	reg[12:0] offset = 0;
 	reg[12:0] cacti_offset = 0;
 
-	reg[31:0] cacti_x = VIDEO_WIDTH-BORDER-CACTI_WIDTH, cacti_y = GROUND-CACTI_HEIGHT;
+	reg[31:0] cacti_x = 550, cacti_y = GROUND-70;
 	wire[31:0] cacti_update;
 	wire inSquare, cactiSquare;
 
@@ -127,7 +127,7 @@ module VGAController(
 
 	// cacti
 	RAM #(
-		.DEPTH(49*80), 		       // sprite mem file size		
+		.DEPTH(42*70), 		       // sprite mem file size		
 		.DATA_WIDTH(1), 		       // either 1 or 0
 		.ADDRESS_WIDTH(13),     // Set address width according to the color count
 		.MEMFILE({FILES_PATH, "cacti.mem"}))  // Memory initialization
@@ -154,7 +154,7 @@ module VGAController(
 	wire[BITS_PER_COLOR-1:0] colorOut; 			  // Output color 
 
 	assign inSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
-	assign cactiSquare = x >= cacti_x & x < (cacti_x + 49) & y >= cacti_y & y < (cacti_y + 80);
+	assign cactiSquare = x >= cacti_x & x < (cacti_x + 42) & y >= cacti_y & y < (cacti_y + 70);
 	assign colorData = background_data || (cactiSquare && cacti_data) ? 12'd0 : 12'hfff; 
 	assign tempColor = (inSquare && sprite_data) ? 12'd0 : colorData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
@@ -162,7 +162,6 @@ module VGAController(
 	// Quickly assign the output colors to their channels using concatenation
 	assign {VGA_R, VGA_G, VGA_B} = colorOut;
 
-	// dffe_ref COLLISION(game_over, ((inSquare & sprite_data) & (cactiSquare & cacti_data)), clk, ~game_over, 1'b0); //jump works
-	dffe_ref COLLISION(game_over, ((inSquare & sprite_data) & (cactiSquare & cacti_data)), clk, ~game_over, reset); //jump doesnt work
+	dffe_ref COLLISION(game_over, ((inSquare & sprite_data) & (cactiSquare & cacti_data)), clk, ~game_over, reset);
 
 endmodule
