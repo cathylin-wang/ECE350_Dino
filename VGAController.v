@@ -16,8 +16,8 @@ module VGAController(
 	
 	/************ LAB MEMORY FILES LOCATION ************/
 	// localparam FILES_PATH = "/Users/smwhitt/Duke/2021/F2020/ece350/cpu/ECE350_Dino/assets/"; // FOR SAMMY waveform
-	localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
-	// localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
+	// localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
+	localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
 
 	// Clock divider 100 MHz -> 25 MHz
 	wire clk25; // 25MHz clock
@@ -29,7 +29,7 @@ module VGAController(
 		pixCounter <= pixCounter + 1; // Since the reg is only 3 bits, it will reset every 8 cycles
 	end
 
-	reg[4:0] screenEndDivider = 0;
+	reg[3:0] screenEndDivider = 0;
 	assign scoreClock = &screenEndDivider;
 
 	// VGA Timing Generation for a Standard VGA Screen
@@ -76,14 +76,17 @@ module VGAController(
 	reg[31:0] score_y = 10; // y location for scores
 	reg[31:0] curr_score4_x = 495, curr_score3_x = 520, curr_score2_x = 545, curr_score1_x = 570, curr_score0_x = 595; // x location for curr score
 	reg[31:0] high_score4_x = 10, high_score3_x = 35, high_score2_x = 60, high_score1_x = 85, high_score0_x = 110; // x location for high score
+	
 	wire curr_score4_data, curr_score3_data, curr_score2_data, curr_score1_data, curr_score0_data; // curr score RAM per bit
 	wire high_score4_data, high_score3_data, high_score2_data, high_score1_data, high_score0_data; // high score RAM per bit
 	wire currScore4Square, currScore3Square, currScore2Square, currScore1Square, currScore0Square; // on pixels where curr score should be
 	wire highScore4Square, highScore3Square, highScore2Square, highScore1Square, highScore0Square; // on pixels where high score should be
 	wire currScoreData, highScoreData; // display score at that part of the screen (in square and data from RAM)
 	wire new_high_score;
+	
 	// DINO
 	wire dino_data, dinoSquare;
+	
 	// CACTI
 	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
 	wire[31:0] cacti_update;
@@ -94,7 +97,7 @@ module VGAController(
 	reg[31:0] gameover_x = 135, gameover_y = 152;
 	wire gameover_data, gameoverSquare;
 	// OFFSETS
-	reg[12:0] offset = 0, cacti_offset = 0;
+	reg[13:0] offset = 0, cacti_offset = 0;
 	reg[12:0] curr_score4_offset = 0, curr_score3_offset = 0, curr_score2_offset = 0, curr_score1_offset = 0, curr_score0_offset = 0;
 	reg[12:0] high_score4_offset = 0, high_score3_offset = 0, high_score2_offset = 0, high_score1_offset = 0, high_score0_offset = 0;
 	reg[13:0] gameover_offset = 0;
@@ -148,6 +151,13 @@ module VGAController(
 			high_score4_addr <= curr_score4_addr;
 		end
 	end
+
+	// update dinosaur position
+	wire [13:0] dino_frame_addr;
+
+	assign dino_frame_addr[0] = (dino_y != 275 | curr_score == 0) ? 0 : curr_score[0];
+	assign dino_frame_addr[1] = (dino_y != 275 | curr_score == 0) ? 0 : ~curr_score[0];
+	assign dino_frame_addr [13:2] = 0;
 
 	// update image offset
 	always @(posedge clk25 or posedge reset) begin
@@ -230,11 +240,11 @@ module VGAController(
 	RAM #(
 		.DEPTH(60*60*3), 		       // sprite mem file size		
 		.DATA_WIDTH(1), 		       // either 1 or 0
-		.ADDRESS_WIDTH(13),     // Set address width according to the color count
+		.ADDRESS_WIDTH(14),     // Set address width according to the color count
 		.MEMFILE({FILES_PATH, "dino.mem"}))  // Memory initialization
 	DinoData(
 		.clk(clk), 							   	   // Rising edge of the 100 MHz clk
-		.addr(13'd0 + offset),					       // Address from the ImageData RAM
+		.addr(dino_frame_addr*60*60 + offset),					       // Address from the ImageData RAM
 		.dataOut(dino_data),				       // 1 or 0 at current address
 		.wEn(1'b0)); 						       // We're always reading
 	
