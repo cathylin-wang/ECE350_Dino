@@ -52,12 +52,6 @@ buttonPress:
   wait
   wait
   wait
-  addi $r2, $r2, 0
-  wait
-  wait
-  wait
-  wait
-  wait
   addi $r2, $r2, 5
   wait
   wait
