@@ -3,7 +3,7 @@
 nop
 nop
 nop
-addi $r1, $r0, 40
+addi $r1, $r0, 60
 addi $r2, $r0, 275
 
 io_loop:
@@ -16,13 +16,13 @@ buttonPress:
   wait
   wait
   wait
-  addi $r2, $r2, -70 
+  addi $r2, $r2, -60 
   wait
   wait
   wait
   wait
   wait
-  addi $r2, $r2, -45
+  addi $r2, $r2, -40
   wait
   wait
   wait
@@ -52,6 +52,12 @@ buttonPress:
   wait
   wait
   wait
+  addi $r2, $r2, 0
+  wait
+  wait
+  wait
+  wait
+  wait
   addi $r2, $r2, 5
   wait
   wait
@@ -76,13 +82,13 @@ buttonPress:
   wait
   wait
   wait
-  addi $r2, $r2, 45
+  addi $r2, $r2, 40
   wait
   wait
   wait
   wait
   wait
-  addi $r2, $r2, 70
+  addi $r2, $r2, 60
   wait
   wait
   j io_loop
