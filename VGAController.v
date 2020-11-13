@@ -83,14 +83,14 @@ module VGAController(
 	wire currScoreData, highScoreData; // display score at that part of the screen (in square and data from RAM)
 	wire new_high_score;
 	// DINO
+	wire [13:0] dino_frame_addr;
 	wire dino_data, dinoSquare;
 	// CACTI
 	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
-	wire[31:0] cacti_update;
+	reg[1:0] cacti_frame_addr = 0;
 	wire cacti_data, cactiSquare;
 	// CLOUDS
 	reg[31:0] cloud_x = 500, cloud_y = 175;
-	wire[31:0] cloud_update;
 	wire cloud_data, cloudSquare;
 	// BACKGROUND
 	wire background_data;
@@ -156,8 +156,6 @@ module VGAController(
 	end
 
 	// update dinosaur position
-	wire [13:0] dino_frame_addr;
-
 	assign dino_frame_addr[0] = (dino_y != 275 | curr_score == 0) ? 0 : curr_score[0];
 	assign dino_frame_addr[1] = (dino_y != 275 | curr_score == 0) ? 0 : ~curr_score[0];
 	assign dino_frame_addr [13:2] = 0;
@@ -227,26 +225,36 @@ module VGAController(
 	end
 	
 	// update on screenEnd
-	assign cacti_update = (cacti_x < 10) ? 550 : cacti_x - velocity; // change cactus position
-	assign cloud_update = (cloud_x < 10) ? 500 : cloud_x - 1;
 	always @(posedge screenEnd or posedge reset) begin
 		// screen divider clock
 		screenEndDivider <= screenEndDivider + 1;
 		// scroll images
 		if (reset) begin
 			cacti_x <= 550;
+			cacti_frame_addr <= curr_score % 3;
 			cloud_x <= 500;
 		end
 		else begin
 			if (~game_over & game_on) begin
-				cacti_x <= cacti_update;
-				cloud_x <= cloud_update;
+				if (cacti_x < 10 || cloud_x < 10) begin
+					if (cacti_x < 10) begin
+						cacti_x <= 550;
+						cacti_frame_addr <= curr_score % 3; 
+					end
+					else begin
+						cloud_x <= 500;
+					end
+				end
+				else begin
+					cloud_x <= cloud_x - 1;
+					cacti_x <= cacti_x - velocity;
+				end
 			end
 		end
 	end
 
 	//change velocity
-	assign velocity = curr_score / 100 + 2;
+	assign velocity = curr_score / 100 + 1;
 	/************ RAM FILES ************/
 	// DINO
 	RAM #(
@@ -262,13 +270,13 @@ module VGAController(
 	
 	// CACTI
 	RAM #(
-		.DEPTH(49*80),
+		.DEPTH(49*80*3),
 		.DATA_WIDTH(1),
-		.ADDRESS_WIDTH(13),
+		.ADDRESS_WIDTH(14),
 		.MEMFILE({FILES_PATH, "cacti.mem"}))
 	CactiData(
 		.clk(clk),
-		.addr(13'd0 + cacti_offset),
+		.addr(cacti_frame_addr*49*80 + cacti_offset),
 		.dataOut(cacti_data),
 		.wEn(1'b0));
 
