@@ -103,6 +103,7 @@ module VGAController(
 	reg[13:0] gameover_offset = 0;
 	// GLOBAL GAME
 	wire game_on;
+	wire [12:0] velocity;
 
 	/************ UPDATING VALUES ************/
 	// calculate score
@@ -220,7 +221,7 @@ module VGAController(
 	end
 	
 	// update on screenEnd
-	assign cacti_update = (cacti_x < 10) ? 550 : cacti_x-1;
+	assign cacti_update = (cacti_x < 10) ? 550 : cacti_x - velocity; // change cactus position
 	always @(posedge screenEnd or posedge reset) begin
 		// screen divider clock
 		screenEndDivider <= screenEndDivider + 1;
@@ -235,6 +236,8 @@ module VGAController(
 		end
 	end
 
+	//change velocity
+	assign velocity = curr_score / 100 + 2;
 	/************ RAM FILES ************/
 	// DINO
 	RAM #(
