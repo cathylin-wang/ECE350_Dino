@@ -420,7 +420,7 @@ module VGAController(
 	assign currScoreData = (currScore0Square & curr_score0_data) | (currScore1Square & curr_score1_data) | (currScore2Square & curr_score2_data) | (currScore3Square & curr_score3_data) | (currScore4Square & curr_score4_data);
 	assign highScoreData = (highScore0Square & high_score0_data) | (highScore1Square & high_score1_data) | (highScore2Square & high_score2_data) | (highScore3Square & high_score3_data) | (highScore4Square & high_score4_data);
 	assign colorData = background_data ? 12'd0 : 12'hfff;
-	assign tempColor = (dinoSquare & dino_data) | (cactiSquare & cacti_data) | (currScoreData & (curr_score % 10 != 0)) | highScoreData | (gameoverSquare & gameover_data) ? 12'd0 : colorData;
+	assign tempColor = (dinoSquare & dino_data) | (cactiSquare & cacti_data) | currScoreData | highScoreData | (gameoverSquare & gameover_data) ? 12'd0 : colorData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
 
 	// Quickly assign the output colors to their channels using concatenation
