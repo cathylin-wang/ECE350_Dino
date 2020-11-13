@@ -16,8 +16,8 @@ module VGAController(
 	
 	/************ LAB MEMORY FILES LOCATION ************/
 	// localparam FILES_PATH = "/Users/smwhitt/Duke/2021/F2020/ece350/cpu/ECE350_Dino/assets/"; // FOR SAMMY waveform
-	// localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
-	localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
+	localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
+	// localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
 
 	// Clock divider 100 MHz -> 25 MHz
 	wire clk25; // 25MHz clock
@@ -76,21 +76,22 @@ module VGAController(
 	reg[31:0] score_y = 10; // y location for scores
 	reg[31:0] curr_score4_x = 495, curr_score3_x = 520, curr_score2_x = 545, curr_score1_x = 570, curr_score0_x = 595; // x location for curr score
 	reg[31:0] high_score4_x = 10, high_score3_x = 35, high_score2_x = 60, high_score1_x = 85, high_score0_x = 110; // x location for high score
-	
 	wire curr_score4_data, curr_score3_data, curr_score2_data, curr_score1_data, curr_score0_data; // curr score RAM per bit
 	wire high_score4_data, high_score3_data, high_score2_data, high_score1_data, high_score0_data; // high score RAM per bit
 	wire currScore4Square, currScore3Square, currScore2Square, currScore1Square, currScore0Square; // on pixels where curr score should be
 	wire highScore4Square, highScore3Square, highScore2Square, highScore1Square, highScore0Square; // on pixels where high score should be
 	wire currScoreData, highScoreData; // display score at that part of the screen (in square and data from RAM)
 	wire new_high_score;
-	
 	// DINO
 	wire dino_data, dinoSquare;
-	
 	// CACTI
 	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
 	wire[31:0] cacti_update;
 	wire cacti_data, cactiSquare;
+	// CLOUDS
+	reg[31:0] cloud_x = 500, cloud_y = 175;
+	wire[31:0] cloud_update;
+	wire cloud_data, cloudSquare;
 	// BACKGROUND
 	wire background_data;
 	// GAME OVER (SCREEN)
@@ -101,6 +102,7 @@ module VGAController(
 	reg[12:0] curr_score4_offset = 0, curr_score3_offset = 0, curr_score2_offset = 0, curr_score1_offset = 0, curr_score0_offset = 0;
 	reg[12:0] high_score4_offset = 0, high_score3_offset = 0, high_score2_offset = 0, high_score1_offset = 0, high_score0_offset = 0;
 	reg[13:0] gameover_offset = 0;
+	reg[11:0] cloud_offset = 0;
 	// GLOBAL GAME
 	wire game_on;
 	wire [12:0] velocity;
@@ -176,6 +178,7 @@ module VGAController(
 			high_score3_offset <= 13'd0;
 			high_score4_offset <= 13'd0;
 			gameover_offset <= 14'd0;
+			cloud_offset <= 12'd0;
 		end
 		else begin
 			if (dinoSquare) begin
@@ -217,28 +220,33 @@ module VGAController(
 			if (gameoverSquare) begin
 				gameover_offset <= gameover_offset+1;
 			end
+			if (cloudSquare) begin
+				cloud_offset <= cloud_offset+1;
+			end
 		end
 	end
 	
 	// update on screenEnd
 	assign cacti_update = (cacti_x < 10) ? 550 : cacti_x - velocity; // change cactus position
+	assign cloud_update = (cloud_x < 10) ? 500 : cloud_x - 1;
 	always @(posedge screenEnd or posedge reset) begin
 		// screen divider clock
 		screenEndDivider <= screenEndDivider + 1;
-		// scroll cactus
+		// scroll images
 		if (reset) begin
 			cacti_x <= 550;
+			cloud_x <= 500;
 		end
 		else begin
 			if (~game_over & game_on) begin
 				cacti_x <= cacti_update;
+				cloud_x <= cloud_update;
 			end
 		end
 	end
 
-	// change velocity
+	//change velocity
 	assign velocity = curr_score / 100 + 2;
-
 	/************ RAM FILES ************/
 	// DINO
 	RAM #(
@@ -402,6 +410,18 @@ module VGAController(
 		.dataOut(gameover_data),
 		.wEn(1'b0));
 
+	// CLOUDS
+	RAM #(
+		.DEPTH(245*100),
+		.DATA_WIDTH(1),
+		.ADDRESS_WIDTH(12),
+		.MEMFILE({FILES_PATH, "cloud.mem"}))
+	CloudData(
+		.clk(clk),
+		.addr(12'd0 + cloud_offset),
+		.dataOut(cloud_data),
+		.wEn(1'b0));
+
 	/************ VGA OUTPUT CODE ************/
 	assign dinoSquare = x >= dino_x & x < (dino_x + 60) & y >= dino_y & y < (dino_y + 60);
 	assign cactiSquare = x >= cacti_x & x < (cacti_x + 49) & y >= cacti_y & y < (cacti_y + 80);
@@ -416,11 +436,12 @@ module VGAController(
 	assign highScore3Square = x >= high_score3_x & x < (high_score3_x + 25) & y >= score_y & y < (score_y + 25);
 	assign highScore4Square = x >= high_score4_x & x < (high_score4_x + 25) & y >= score_y & y < (score_y + 25);
 	assign gameoverSquare = game_over & (x >= gameover_x & x < (gameover_x + 370) & y >= gameover_y & y < (gameover_y + 30));
+	assign cloudSquare = x >= cloud_x & x < (cloud_x + 108) & y >= cloud_y & y < (cloud_y + 31);
 
 	assign currScoreData = (currScore0Square & curr_score0_data) | (currScore1Square & curr_score1_data) | (currScore2Square & curr_score2_data) | (currScore3Square & curr_score3_data) | (currScore4Square & curr_score4_data);
 	assign highScoreData = (highScore0Square & high_score0_data) | (highScore1Square & high_score1_data) | (highScore2Square & high_score2_data) | (highScore3Square & high_score3_data) | (highScore4Square & high_score4_data);
 	assign colorData = background_data ? 12'd0 : 12'hfff;
-	assign tempColor = (dinoSquare & dino_data) | (cactiSquare & cacti_data) | (currScoreData & (curr_score % 10 != 0)) | highScoreData | (gameoverSquare & gameover_data) ? 12'd0 : colorData;
+	assign tempColor = (dinoSquare & dino_data) | (cactiSquare & cacti_data) | currScoreData | highScoreData | (gameoverSquare & gameover_data) | (cloudSquare & cloud_data) ? 12'd0 : colorData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
 
 	// Quickly assign the output colors to their channels using concatenation
