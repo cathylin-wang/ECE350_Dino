@@ -16,8 +16,8 @@ module VGAController(
 	
 	/************ LAB MEMORY FILES LOCATION ************/
 	// localparam FILES_PATH = "/Users/smwhitt/Duke/2021/F2020/ece350/cpu/ECE350_Dino/assets/"; // FOR SAMMY waveform
-	localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
-	// localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
+	// localparam FILES_PATH = "Z:/cpu/ECE350_Dino/assets/"; // FOR SAMMY vivado
+	localparam FILES_PATH = "C:/Users/cwang/Courses/ECE350/final_project/ECE350_Dino/assets/"; //FOR CATHY
 
 	// Clock divider 100 MHz -> 25 MHz
 	wire clk25; // 25MHz clock
@@ -68,7 +68,7 @@ module VGAController(
 
 	/************ WIRES AND REGISTERS ************/
 	// VGA OUTPUT
-	wire[BITS_PER_COLOR-1:0] colorOut, colorData, tempColor;
+	wire[BITS_PER_COLOR-1:0] colorOut, lightGrayData, colorData, tempColor;
 	// SCORE
 	reg[16:0] high_score = 0, curr_score = 0, curr_score_copy = 0; // overall scores
 	reg[13:0] mod_score = 0, curr_score4_addr = 0, curr_score3_addr = 0, curr_score2_addr = 0, curr_score1_addr = 0, curr_score0_addr = 0; // curr score bit breakdown (for RAM)
@@ -98,7 +98,8 @@ module VGAController(
 	reg[31:0] gameover_x = 135, gameover_y = 152;
 	wire gameover_data, gameoverSquare;
 	// OFFSETS
-	reg[13:0] offset = 0, cacti_offset = 0;
+	reg[14:0] offset = 0; 
+	reg[13:0] cacti_offset = 0;
 	reg[12:0] curr_score4_offset = 0, curr_score3_offset = 0, curr_score2_offset = 0, curr_score1_offset = 0, curr_score0_offset = 0;
 	reg[12:0] high_score4_offset = 0, high_score3_offset = 0, high_score2_offset = 0, high_score1_offset = 0, high_score0_offset = 0;
 	reg[13:0] gameover_offset = 0;
@@ -156,11 +157,13 @@ module VGAController(
 	end
 
 	// update dinosaur position
-	wire [13:0] dino_frame_addr;
+	wire [3:0] dino_frame, dino_frame_addr;
 
-	assign dino_frame_addr[0] = (dino_y != 275 | curr_score == 0) ? 0 : curr_score[0];
-	assign dino_frame_addr[1] = (dino_y != 275 | curr_score == 0) ? 0 : ~curr_score[0];
-	assign dino_frame_addr [13:2] = 0;
+	assign dino_frame[0] = (dino_y != 275 | curr_score == 0) ? 0 : curr_score[0];
+	assign dino_frame[1] = (dino_y != 275 | curr_score == 0) ? 0 : ((down & curr_score[0]) | (~down & ~curr_score[0]));
+	assign dino_frame[2] = (dino_y != 275 | curr_score == 0) ? 0 : (down & ~curr_score[0]);
+	
+	assign dino_frame_addr = game_over ? 3'd5 : dino_frame;
 
 	// update image offset
 	always @(posedge clk25 or posedge reset) begin
@@ -246,13 +249,13 @@ module VGAController(
 	end
 
 	//change velocity
-	assign velocity = curr_score / 100 + 2;
+	assign velocity = curr_score / 100 + 4;
 	/************ RAM FILES ************/
 	// DINO
 	RAM #(
-		.DEPTH(60*60*3), 		       // sprite mem file size		
+		.DEPTH(60*60*6), 		       // sprite mem file size		
 		.DATA_WIDTH(1), 		       // either 1 or 0
-		.ADDRESS_WIDTH(14),     // Set address width according to the color count
+		.ADDRESS_WIDTH(15),     // Set address width according to the color count
 		.MEMFILE({FILES_PATH, "dino.mem"}))  // Memory initialization
 	DinoData(
 		.clk(clk), 							   	   // Rising edge of the 100 MHz clk
@@ -262,13 +265,13 @@ module VGAController(
 	
 	// CACTI
 	RAM #(
-		.DEPTH(49*80),
+		.DEPTH(49*80*3),
 		.DATA_WIDTH(1),
-		.ADDRESS_WIDTH(13),
+		.ADDRESS_WIDTH(14),
 		.MEMFILE({FILES_PATH, "cacti.mem"}))
 	CactiData(
 		.clk(clk),
-		.addr(13'd0 + cacti_offset),
+		.addr(14'd0 + cacti_offset),
 		.dataOut(cacti_data),
 		.wEn(1'b0));
 
@@ -441,7 +444,8 @@ module VGAController(
 	assign currScoreData = (currScore0Square & curr_score0_data) | (currScore1Square & curr_score1_data) | (currScore2Square & curr_score2_data) | (currScore3Square & curr_score3_data) | (currScore4Square & curr_score4_data);
 	assign highScoreData = (highScore0Square & high_score0_data) | (highScore1Square & high_score1_data) | (highScore2Square & high_score2_data) | (highScore3Square & high_score3_data) | (highScore4Square & high_score4_data);
 	assign colorData = background_data ? 12'd0 : 12'hfff;
-	assign tempColor = (dinoSquare & dino_data) | (cactiSquare & cacti_data) | currScoreData | highScoreData | (gameoverSquare & gameover_data) | (cloudSquare & cloud_data) ? 12'd0 : colorData;
+	assign lightGrayData = (cloudSquare & cloud_data) ? 12'haaa: colorData;
+	assign tempColor = (dinoSquare & dino_data) | (cactiSquare & cacti_data) | currScoreData | highScoreData | (gameoverSquare & gameover_data) ? 12'd0 : lightGrayData;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
 
 	// Quickly assign the output colors to their channels using concatenation
