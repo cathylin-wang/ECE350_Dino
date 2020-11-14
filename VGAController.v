@@ -88,9 +88,11 @@ module VGAController(
 	// CACTI
 	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
 	reg[1:0] cacti_frame_addr = 0;
+	wire[31:0] cacti_update;
 	wire cacti_data, cactiSquare;
 	// CLOUDS
 	reg[31:0] cloud_x = 500, cloud_y = 175;
+	wire[31:0] cloud_update;
 	wire cloud_data, cloudSquare;
 	// BACKGROUND
 	wire background_data;
@@ -225,6 +227,8 @@ module VGAController(
 	end
 	
 	// update on screenEnd
+	assign cacti_update = cacti_x < 10 ? 550 : cacti_x-velocity;
+	assign cloud_update = cloud_x < 10 ? 500 : cloud_x-1;
 	always @(posedge screenEnd or posedge reset) begin
 		// screen divider clock
 		screenEndDivider <= screenEndDivider + 1;
@@ -236,25 +240,17 @@ module VGAController(
 		end
 		else begin
 			if (~game_over & game_on) begin
-				if (cacti_x < 10 || cloud_x < 10) begin
-					if (cacti_x < 10) begin
-						cacti_x <= 550;
-						cacti_frame_addr <= curr_score % 3; 
-					end
-					else begin
-						cloud_x <= 500;
-					end
-				end
-				else begin
-					cloud_x <= cloud_x - 1;
-					cacti_x <= cacti_x - velocity;
+				cacti_x <= cacti_update;
+				cloud_x <= cloud_update;
+				if (cacti_x < 10) begin
+					cacti_frame_addr <= curr_score % 3;
 				end
 			end
 		end
 	end
 
 	//change velocity
-	assign velocity = curr_score / 100 + 1;
+	assign velocity = curr_score / 100 + 2;
 	/************ RAM FILES ************/
 	// DINO
 	RAM #(
