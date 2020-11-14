@@ -15,9 +15,7 @@ buttonPress:
   wait
   wait
   wait
-  wait
   addi $r2, $r2, -60 
-  wait
   wait
   wait
   wait
@@ -27,9 +25,7 @@ buttonPress:
   wait
   wait
   wait
-  wait
   addi $r2, $r2, -30
-  wait
   wait
   wait
   wait
@@ -39,9 +35,7 @@ buttonPress:
   wait
   wait
   wait
-  wait
   addi $r2, $r2, -10
-  wait
   wait
   wait
   wait
@@ -51,15 +45,7 @@ buttonPress:
   wait
   wait
   wait
-  wait
-  addi $r2, $r2, 0
-  wait
-  wait
-  wait
-  wait
-  wait
   addi $r2, $r2, 5
-  wait
   wait
   wait
   wait
@@ -69,9 +55,7 @@ buttonPress:
   wait
   wait
   wait
-  wait
   addi $r2, $r2, 20
-  wait
   wait
   wait
   wait
@@ -81,9 +65,7 @@ buttonPress:
   wait
   wait
   wait
-  wait
   addi $r2, $r2, 40
-  wait
   wait
   wait
   wait
