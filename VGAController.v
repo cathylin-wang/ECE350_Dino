@@ -85,7 +85,7 @@ module VGAController(
 	// DINO
 	wire dino_data, dinoSquare;
 	// CACTI
-	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
+	reg signed [31:0] cacti_x = 550, cacti_y = GROUND-80;
 	wire[31:0] cacti_update;
 	wire cacti_data, cactiSquare;
 	// CLOUDS
@@ -249,7 +249,7 @@ module VGAController(
 	end
 
 	//change velocity
-	assign velocity = curr_score / 100 + 4;
+	assign velocity = curr_score / 100 + 2;
 	/************ RAM FILES ************/
 	// DINO
 	RAM #(
