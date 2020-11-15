@@ -162,7 +162,7 @@ module VGAController(
 	assign dino_frame[0] = (dino_y != 275 | curr_score == 0) ? 0 : curr_score[0];
 	assign dino_frame[1] = (dino_y != 275 | curr_score == 0) ? 0 : ((down & curr_score[0]) | (~down & ~curr_score[0]));
 	assign dino_frame[2] = (dino_y != 275 | curr_score == 0) ? 0 : (down & ~curr_score[0]);
-	
+	assign dino_frame[3] = 1'b0;
 	assign dino_frame_addr = game_over ? 3'd5 : dino_frame;
 
 	// update image offset
