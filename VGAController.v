@@ -84,8 +84,10 @@ module VGAController(
 	wire new_high_score;
 	// DINO
 	wire dino_data, dinoSquare;
+	wire [3:0] dino_frame, dino_frame_addr;
 	// CACTI
 	reg signed [31:0] cacti_x = 550, cacti_y = GROUND-80;
+	reg[1:0] cacti_frame_addr = 0;
 	wire[31:0] cacti_update;
 	wire cacti_data, cactiSquare;
 	// CLOUDS
@@ -156,9 +158,7 @@ module VGAController(
 		end
 	end
 
-	// update dinosaur position
-	wire [3:0] dino_frame, dino_frame_addr;
-
+	// update dinosaur frame for running animation
 	assign dino_frame[0] = (dino_y != 275 | curr_score == 0) ? 0 : curr_score[0];
 	assign dino_frame[1] = (dino_y != 275 | curr_score == 0) ? 0 : ((down & curr_score[0]) | (~down & ~curr_score[0]));
 	assign dino_frame[2] = (dino_y != 275 | curr_score == 0) ? 0 : (down & ~curr_score[0]);
@@ -230,26 +230,31 @@ module VGAController(
 	end
 	
 	// update on screenEnd
-	assign cacti_update = (cacti_x < 10) ? 550 : cacti_x - velocity; // change cactus position
-	assign cloud_update = (cloud_x < 10) ? 500 : cloud_x - 1;
+	assign cacti_update = cacti_x < 10 ? 550 : cacti_x-velocity;
+	assign cloud_update = cloud_x < 10 ? 500 : cloud_x-1;
 	always @(posedge screenEnd or posedge reset) begin
 		// screen divider clock
 		screenEndDivider <= screenEndDivider + 1;
 		// scroll images
 		if (reset) begin
 			cacti_x <= 550;
+			cacti_frame_addr <= curr_score % 3;
 			cloud_x <= 500;
 		end
 		else begin
 			if (~game_over & game_on) begin
 				cacti_x <= cacti_update;
 				cloud_x <= cloud_update;
+				if (cacti_x < 10) begin
+					cacti_frame_addr <= curr_score % 3;
+				end
 			end
 		end
 	end
 
-	//change velocity
-	assign velocity = curr_score / 100 + 2;
+	// change velocity
+	assign velocity = curr_score / 100 + 1;
+
 	/************ RAM FILES ************/
 	// DINO
 	RAM #(
@@ -271,7 +276,7 @@ module VGAController(
 		.MEMFILE({FILES_PATH, "cacti.mem"}))
 	CactiData(
 		.clk(clk),
-		.addr(14'd0 + cacti_offset),
+		.addr(cacti_frame_addr*49*80 + cacti_offset),
 		.dataOut(cacti_data),
 		.wEn(1'b0));
 
