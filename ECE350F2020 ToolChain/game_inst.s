@@ -7,7 +7,7 @@ addi $r1, $r0, 60
 addi $r2, $r0, 275
 
 io_loop:
-  jio     buttonPress
+  bio     buttonPress
   j       io_loop
 
 buttonPress:

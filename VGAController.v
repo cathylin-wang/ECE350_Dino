@@ -68,7 +68,7 @@ module VGAController(
 
 	/************ WIRES AND REGISTERS ************/
 	// VGA OUTPUT
-	wire[BITS_PER_COLOR-1:0] colorOut, colorData, tempColor;
+	wire[BITS_PER_COLOR-1:0] colorOut, backgroundColor, lightGrayColor, tempColor;
 	// SCORE
 	reg[16:0] high_score = 0, curr_score = 0, curr_score_copy = 0; // overall scores
 	reg[13:0] mod_score = 0, curr_score4_addr = 0, curr_score3_addr = 0, curr_score2_addr = 0, curr_score1_addr = 0, curr_score0_addr = 0; // curr score bit breakdown (for RAM)
@@ -83,7 +83,7 @@ module VGAController(
 	wire currScoreData, highScoreData; // display score at that part of the screen (in square and data from RAM)
 	wire new_high_score;
 	// DINO
-	wire [13:0] dino_frame_addr;
+	wire[2:0] dino_frame, dino_frame_addr;
 	wire dino_data, dinoSquare;
 	// CACTI
 	reg[31:0] cacti_x = 550, cacti_y = GROUND-80;
@@ -106,8 +106,8 @@ module VGAController(
 	reg[13:0] gameover_offset = 0;
 	reg[11:0] cloud_offset = 0;
 	// GLOBAL GAME
+	wire [31:0] velocity;
 	wire game_on;
-	wire [12:0] velocity;
 
 	/************ UPDATING VALUES ************/
 	// calculate score
@@ -158,9 +158,11 @@ module VGAController(
 	end
 
 	// update dinosaur position
-	assign dino_frame_addr[0] = (dino_y != 275 | curr_score == 0) ? 0 : curr_score[0];
-	assign dino_frame_addr[1] = (dino_y != 275 | curr_score == 0) ? 0 : ~curr_score[0];
-	assign dino_frame_addr [13:2] = 0;
+	assign dino_frame[0] = (dino_y != 275 | curr_score == 0) ? 0 : curr_score[0];
+	assign dino_frame[1] = (dino_y != 275 | curr_score == 0) ? 0 : ((down & curr_score[0]) | (~down & ~curr_score[0]));
+	assign dino_frame[2] = (dino_y != 275 | curr_score == 0) ? 0 : (down & ~curr_score[0]);
+	
+	assign dino_frame_addr = game_over ? 3'd5 : dino_frame;
 
 	// update image offset
 	always @(posedge clk25 or posedge reset) begin
@@ -249,14 +251,15 @@ module VGAController(
 		end
 	end
 
-	//change velocity
+	// change velocity
 	assign velocity = curr_score / 100 + 2;
+
 	/************ RAM FILES ************/
 	// DINO
 	RAM #(
-		.DEPTH(60*60*3), 		       // sprite mem file size		
+		.DEPTH(60*60*6), 		       // sprite mem file size		
 		.DATA_WIDTH(1), 		       // either 1 or 0
-		.ADDRESS_WIDTH(14),     // Set address width according to the color count
+		.ADDRESS_WIDTH(15),     // Set address width according to the color count
 		.MEMFILE({FILES_PATH, "dino.mem"}))  // Memory initialization
 	DinoData(
 		.clk(clk), 							   	   // Rising edge of the 100 MHz clk
@@ -444,8 +447,9 @@ module VGAController(
 
 	assign currScoreData = (currScore0Square & curr_score0_data) | (currScore1Square & curr_score1_data) | (currScore2Square & curr_score2_data) | (currScore3Square & curr_score3_data) | (currScore4Square & curr_score4_data);
 	assign highScoreData = (highScore0Square & high_score0_data) | (highScore1Square & high_score1_data) | (highScore2Square & high_score2_data) | (highScore3Square & high_score3_data) | (highScore4Square & high_score4_data);
-	assign colorData = background_data ? 12'd0 : 12'hfff;
-	assign tempColor = (dinoSquare & dino_data) | (cactiSquare & cacti_data) | currScoreData | highScoreData | (gameoverSquare & gameover_data) | (cloudSquare & cloud_data) ? 12'd0 : colorData;
+	assign backgroundColor = background_data ? 12'd0 : 12'hfff;
+	assign lightGrayColor = (cloudSquare & cloud_data) ? 12'haaa : backgroundColor;
+	assign tempColor = (dinoSquare & dino_data) | (cactiSquare & cacti_data) | currScoreData | highScoreData | (gameoverSquare & gameover_data) ? 12'd0 : lightGrayColor;
 	assign colorOut = active ? tempColor : 12'd0; // When not active, output black
 
 	// Quickly assign the output colors to their channels using concatenation
