@@ -58,7 +58,7 @@ instruction_t opcode_arr[] = {
     instruction_t(OPCODE_SETX, OPCODE_ALU_DEFAULT, "setx",  J),
     instruction_t(OPCODE_ALU, OPCODE_MULT, "mul", R),
     instruction_t(OPCODE_ALU, OPCODE_DIV, "div", R),
-    instruction_t(OPCODE_JIO, OPCODE_ALU_DEFAULT, "jio", J),
+    instruction_t(OPCODE_JIO, OPCODE_ALU_DEFAULT, "bio", J),
     instruction_t(OPCODE_WAIT, OPCODE_ALU_DEFAULT, "wait", Z),
 };
 
